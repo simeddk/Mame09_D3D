@@ -81,9 +81,6 @@
     <ClInclude Include="Renders\Texture.h">
       <Filter>Renders</Filter>
     </ClInclude>
-    <ClInclude Include="Renders\VertexLayouts.h">
-      <Filter>Renders</Filter>
-    </ClInclude>
     <ClInclude Include="Systems\D3D.h">
       <Filter>Systems</Filter>
     </ClInclude>
