@@ -2,7 +2,7 @@
 
 #include "Systems/IExecute.h"
 
-class MultiLineDemo : public IExecute
+class PlaneDemo : public IExecute
 {
 public:
 	virtual void Initialize() override;

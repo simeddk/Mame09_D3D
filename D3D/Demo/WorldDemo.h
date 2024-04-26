@@ -2,7 +2,7 @@
 
 #include "Systems/IExecute.h"
 
-class MultiLineDemo : public IExecute
+class WorldDemo : public IExecute
 {
 public:
 	virtual void Initialize() override;
@@ -24,4 +24,6 @@ private:
 
 	Vertex vertices[6];
 	ID3D11Buffer* vertexBuffer;
+
+	Matrix world;
 };

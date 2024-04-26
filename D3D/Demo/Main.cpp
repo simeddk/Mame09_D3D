@@ -4,10 +4,14 @@
 
 #include "LineDemo.h"
 #include "LineColorDemo.h"
+#include "MultiLineDemo.h"
+#include "PolygonDemo.h"
+#include "PlaneDemo.h"
+#include "WorldDemo.h"
 
 void Main::Initialize()
 {
-	Push(new LineColorDemo());
+	Push(new WorldDemo());
 }
 
 

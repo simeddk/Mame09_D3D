@@ -3,17 +3,24 @@
 
 void MultiLineDemo::Initialize()
 {
-	shader = new Shader(L"03_Pass.fx");
+	shader = new Shader(L"03_Pass.fxo");
 
+	//Line1
 	vertices[0].Position = Vector3(0, 0, 0);
 	vertices[1].Position = Vector3(0.5f, 0, 0);
 
-	vertices[0].Color = Color(1, 1, 0, 1);
-	vertices[1].Color = Color(1, 0, 1, 1);
+	//Line2
+	vertices[2].Position = Vector3(0, 0.5f, 0);
+	vertices[3].Position = Vector3(0.5f, 0.5f, 0);
+
+	//Line3
+	vertices[4].Position = Vector3(0, -0.5f, 0);
+	vertices[5].Position = Vector3(0.5f, -0.5f, 0);
+
 
 	D3D11_BUFFER_DESC desc;
 	ZeroMemory(&desc, sizeof(D3D11_BUFFER_DESC));
-	desc.ByteWidth = sizeof(Vertex) * 2;
+	desc.ByteWidth = sizeof(Vertex) * 6;
 	desc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
 
 	D3D11_SUBRESOURCE_DATA subResource = { 0 };
@@ -24,6 +31,7 @@ void MultiLineDemo::Initialize()
 
 void MultiLineDemo::Destroy()
 {
+	SafeDelete(shader);
 	SafeRelease(vertexBuffer);
 }
 
@@ -37,7 +45,32 @@ void MultiLineDemo::Render()
 	UINT offset = 0;
 
 	D3D::GetDC()->IASetVertexBuffers(0, 1, &vertexBuffer, &stride, &offset);
-	D3D::GetDC()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_LINELIST);
+	
+	
+	//PrimitiveTopology Test
+	D3D11_PRIMITIVE_TOPOLOGY topology[] =
+	{
+		D3D11_PRIMITIVE_TOPOLOGY_LINELIST,
+		D3D11_PRIMITIVE_TOPOLOGY_LINESTRIP,
+	};
 
-	shader->Draw(0, 0, 2);
+	static bool bStrip;
+	ImGui::Checkbox("Strip Mode", &bStrip);
+	D3D::GetDC()->IASetPrimitiveTopology(bStrip ? topology[1] : topology[0]);
+
+	//StartLocation Test
+	static int startLocation = 0;
+	ImGui::SliderInt("Start Location", &startLocation, 0, 6);
+
+	//Pass Test
+	static int pass;
+	ImGui::InputInt("Pass", &pass);
+	pass = Math::Clamp(pass, 0, 3);
+
+	//VectorParam Test
+	static Color baseColor = Color(1, 0, 1, 1);
+	ImGui::ColorEdit3("Base Color", baseColor);
+	shader->AsVector("BaseColor")->SetFloatVector(baseColor);
+
+	shader->Draw(0, pass, 6, startLocation);
 }
