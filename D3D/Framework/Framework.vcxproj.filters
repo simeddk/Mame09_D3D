@@ -56,6 +56,9 @@
       <Filter>Viewer</Filter>
     </ClCompile>
     <ClCompile Include="Framework.cpp" />
+    <ClCompile Include="Viewer\Camera.cpp">
+      <Filter>Viewer</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Renders">
@@ -130,5 +133,8 @@
       <Filter>Viewer</Filter>
     </ClInclude>
     <ClInclude Include="Framework.h" />
+    <ClInclude Include="Viewer\Camera.h">
+      <Filter>Viewer</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

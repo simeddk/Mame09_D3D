@@ -21,6 +21,15 @@
     <ClCompile Include="WorldDemo.cpp">
       <Filter>Transform</Filter>
     </ClCompile>
+    <ClCompile Include="MultiWorldDemo.cpp">
+      <Filter>Transform</Filter>
+    </ClCompile>
+    <ClCompile Include="IndexBufferDemo.cpp">
+      <Filter>Meshes</Filter>
+    </ClCompile>
+    <ClCompile Include="GridDemo.cpp">
+      <Filter>Meshes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Main.h" />
@@ -42,6 +51,15 @@
     </ClInclude>
     <ClInclude Include="WorldDemo.h">
       <Filter>Transform</Filter>
+    </ClInclude>
+    <ClInclude Include="MultiWorldDemo.h">
+      <Filter>Transform</Filter>
+    </ClInclude>
+    <ClInclude Include="IndexBufferDemo.h">
+      <Filter>Meshes</Filter>
+    </ClInclude>
+    <ClInclude Include="GridDemo.h">
+      <Filter>Meshes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

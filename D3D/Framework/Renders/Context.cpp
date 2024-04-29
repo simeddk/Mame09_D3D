@@ -54,7 +54,15 @@ void Context::ResizeScreen()
 
 void Context::Update()
 {
-	
+	ImGui::SliderFloat("Camera.X", &position.x, 0, 128);
+	ImGui::SliderFloat("Camera.Y", &position.y, -20, 20);
+	ImGui::SliderFloat("Camera.Z", &position.z, -128, 128);
+
+	D3DXVECTOR3 forward(0, 0, 1);
+	D3DXVECTOR3 right(1, 0, 0);
+	D3DXVECTOR3 up(0, 1, 0);
+
+	D3DXMatrixLookAtLH(&view, &position, &(position + forward), &up);
 }
 
 void Context::Render()
