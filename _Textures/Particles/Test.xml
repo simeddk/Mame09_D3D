@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Particle xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <BlendState>1</BlendState>
+    <Loop>true</Loop>
+    <TextureFile>Star.png</TextureFile>
+    <MaxParticles>621</MaxParticles>
+    <ReadyTime>0.1</ReadyTime>
+    <ReadyRandomTime>0.1</ReadyRandomTime>
+    <StartVelocity>0</StartVelocity>
+    <EndVelocity>0</EndVelocity>
+    <MinHorizontalVelocity>0</MinHorizontalVelocity>
+    <MaxHorizontalVelocity>0.1</MaxHorizontalVelocity>
+    <MinVerticalVelocity>0</MinVerticalVelocity>
+    <MaxVerticalVelocity>0.1</MaxVerticalVelocity>
+    <Gravity X="0" Y="0" Z="0"/>
+    <MinColor R="0.76209676" G="0.62995899" B="0.75783449" A="1"/>
+    <MaxColor R="0.69999999" G="0" B="0.69999999" A="1"/>
+    <MinRotateSpeed>-0.74000001</MinRotateSpeed>
+    <MaxRotateSpeed>0.032000002</MaxRotateSpeed>
+    <MinStartSize>0</MinStartSize>
+    <MaxStartSize>12</MaxStartSize>
+    <MinEndSize>160</MinEndSize>
+    <MaxEndSize>220</MaxEndSize>
+</Particle>

@@ -17,8 +17,9 @@ public:
 	void Update();
 	void Render();
 
-	D3DXMATRIX View() { return view; }
+	D3DXMATRIX View();
 	D3DXMATRIX Projection();
+	Camera* GetCamera() { return camera; }
 
 	class Perspective* GetPerspective() { return perspective; }
 	class Viewport* GetViewport() { return viewport; }
@@ -30,6 +31,5 @@ private:
 	class Perspective* perspective;
 	class Viewport* viewport;
 
-	D3DXVECTOR3 position;
-	D3DXMATRIX view;
+	Camera* camera;
 };

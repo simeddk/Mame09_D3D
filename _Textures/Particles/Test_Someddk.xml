@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Particle xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <BlendState>1</BlendState>
+    <Loop>true</Loop>
+    <TextureFile>Spark.png</TextureFile>
+    <MaxParticles>300</MaxParticles>
+    <ReadyTime>1</ReadyTime>
+    <ReadyRandomTime>0</ReadyRandomTime>
+    <StartVelocity>0</StartVelocity>
+    <EndVelocity>0</EndVelocity>
+    <MinHorizontalVelocity>0</MinHorizontalVelocity>
+    <MaxHorizontalVelocity>0.1</MaxHorizontalVelocity>
+    <MinVerticalVelocity>0</MinVerticalVelocity>
+    <MaxVerticalVelocity>0.1</MaxVerticalVelocity>
+    <Gravity X="0" Y="0" Z="0"/>
+    <MinColor R="0.69354844" G="1" B="0" A="1"/>
+    <MaxColor R="1" G="0.19354838" B="0" A="1"/>
+    <MinRotateSpeed>0</MinRotateSpeed>
+    <MaxRotateSpeed>0</MaxRotateSpeed>
+    <MinStartSize>5</MinStartSize>
+    <MaxStartSize>5</MaxStartSize>
+    <MinEndSize>5</MinEndSize>
+    <MaxEndSize>5</MaxEndSize>
+</Particle>

@@ -3,6 +3,12 @@
 
 void GridDemo::Initialize()
 {
+	Context::Get()->GetCamera()->RotationDegree(17, -1, 0);
+	Context::Get()->GetCamera()->Position(58, 28, -21);
+	Freedom* freedom = dynamic_cast<Freedom*>(Context::Get()->GetCamera());
+	if (freedom != nullptr)
+		freedom->Speed(10, 10);
+
 	shader = new Shader(L"07_Grid.fxo");
 
 	D3DXMatrixIdentity(&world);
