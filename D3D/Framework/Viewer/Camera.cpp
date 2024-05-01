@@ -53,6 +53,8 @@ void Camera::RotationDegree(float x, float y, float z)
 void Camera::RotationDegree(Vector3& vec)
 {
 	rotation = vec * 0.017453f;
+
+	Rotation(rotation);
 }
 
 void Camera::RotationDegree(Vector3* vec)
@@ -72,6 +74,7 @@ void Camera::Rotation()
 	D3DXVec3TransformNormal(&forward, &Vector3(0, 0, 1), &matRotation);
 	D3DXVec3TransformNormal(&right, &Vector3(1, 0, 0), &matRotation);
 	D3DXVec3TransformNormal(&up, &Vector3(0, 1, 0), &matRotation);
+
 }
 
 void Camera::Move()
