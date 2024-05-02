@@ -1,7 +1,7 @@
 #include "stdafx.h"
-#include "TerrainDemo.h"
+#include "GetHeightDemo.h"
 
-void TerrainDemo::Initialize()
+void GetHeightDemo::Initialize()
 {
 	Context::Get()->GetCamera()->RotationDegree(30, 0, 0);
 	Context::Get()->GetCamera()->Position(136, 129, -170);
@@ -14,13 +14,13 @@ void TerrainDemo::Initialize()
 	terrain->AlphaMap(L"Terrain/Gray256.png");
 }
 
-void TerrainDemo::Destroy()
+void GetHeightDemo::Destroy()
 {
 	SafeDelete(shader);
 	SafeDelete(terrain);
 }
 
-void TerrainDemo::Update()
+void GetHeightDemo::Update()
 {
 	static int pass = shader->PassCount() - 1;
 	ImGui::SliderInt("Pass", &pass, 0, shader->PassCount() - 1);
@@ -38,7 +38,7 @@ void TerrainDemo::Update()
 	terrain->Update();
 }
 
-void TerrainDemo::Render()
+void GetHeightDemo::Render()
 {
 	terrain->Render();
 }

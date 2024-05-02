@@ -42,6 +42,9 @@
     <ClCompile Include="TerrainDemo.cpp">
       <Filter>Enivironment</Filter>
     </ClCompile>
+    <ClCompile Include="GetHeightDemo.cpp">
+      <Filter>Enivironment</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Main.h" />
@@ -83,6 +86,9 @@
       <Filter>Texture</Filter>
     </ClInclude>
     <ClInclude Include="TerrainDemo.h">
+      <Filter>Enivironment</Filter>
+    </ClInclude>
+    <ClInclude Include="GetHeightDemo.h">
       <Filter>Enivironment</Filter>
     </ClInclude>
   </ItemGroup>

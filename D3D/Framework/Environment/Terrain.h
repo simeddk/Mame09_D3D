@@ -9,7 +9,16 @@ public:
 	void Update();
 	void Render();
 
+	void visibleNormal();
+
 	UINT& Pass() { return pass; }
+
+	void BaseMap(wstring file);
+	void LayerMap(wstring file);
+	void AlphaMap(wstring file);
+
+	void Tile(float tile) { this->tile = tile; }
+	void Intensity(float intensity) { this->intensity = intensity; }
 
 private:
 	void CreateVertexData();
@@ -23,6 +32,7 @@ private:
 	{
 		Vector3 Position = Vector3(0, 0, 0);
 		Vector3 Normal = Vector3(0, 0, 0);
+		Vector2 Uv = Vector2(0, 0);
 	};
 
 
@@ -43,4 +53,13 @@ private:
 	Matrix world;
 
 	Texture* heightMap;
+	Texture* baseMap = nullptr;
+	Texture* layerMap = nullptr;
+	Texture* alphaMap = nullptr;
+
+	float tile = 4.f;
+	float intensity = 2.5f;
+
+	bool bVisibleNormal = false;
+	UINT vertexInterval = 3;
 };

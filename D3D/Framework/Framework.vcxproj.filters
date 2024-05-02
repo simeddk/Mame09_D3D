@@ -65,6 +65,9 @@
     <ClCompile Include="Environment\Terrain.cpp">
       <Filter>Environment</Filter>
     </ClCompile>
+    <ClCompile Include="Renders\DebugLine.cpp">
+      <Filter>Renders</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Renders">
@@ -150,6 +153,9 @@
     </ClInclude>
     <ClInclude Include="Environment\Terrain.h">
       <Filter>Environment</Filter>
+    </ClInclude>
+    <ClInclude Include="Renders\DebugLine.h">
+      <Filter>Renders</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
