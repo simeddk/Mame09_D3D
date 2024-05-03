@@ -82,4 +82,11 @@ typedef D3DXPLANE Plane;
 #include "Utilities/String.h"
 #include "Utilities/Path.h"
 
+#include "StaticMeshes/StaticMesh.h"
+#include "StaticMeshes/StaticMesh_Quad.h"
+//Todo. Plane
+//Cube
+//Cylinder
+//Sphere
+
 #include "Environment/Terrain.h"

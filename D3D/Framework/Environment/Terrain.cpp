@@ -62,6 +62,76 @@ void Terrain::Render()
 	shader->DrawIndexed(0, pass, indexCount);
 }
 
+float Terrain::GetHeightByInterp(Vector3 position)
+{
+	UINT x = (UINT)position.x;
+	UINT z = (UINT)position.z;
+
+	if (x < 0 || x > width - 2) return FLT_MIN;
+	if (z < 0 || z > height - 2) return FLT_MIN;
+
+	UINT index[4];
+	index[0] = width * z + x;
+	index[1] = width * (z + 1) + x;
+	index[2] = width * z + (x + 1);
+	index[3] = width * (z + 1) + (x + 1);
+	
+	Vector3 p[4];
+	for (UINT i = 0 ; i < 4; i++)
+		p[i] = vertices[index[i]].Position;
+
+	float ddx = position.x - p[0].x;
+	float ddz = position.z - p[0].z;
+
+	Vector3 result;
+	if (ddx + ddz <= 1)
+	{
+		result = p[0] + (p[2] - p[0]) * ddx + (p[1] - p[0]) * ddz;
+	}
+	else
+	{
+		ddx = 1.f - ddx;
+		ddz = 1.f - ddz;
+
+		result = p[3] + (p[1] - p[3]) * ddx + (p[2] - p[3]) * ddz;
+	}
+
+	return result.y;
+}
+
+float Terrain::GetHeightByRaycast(Vector3 position)
+{
+	UINT x = (UINT)position.x;
+	UINT z = (UINT)position.z;
+
+	if (x < 0 || x > width - 2) return FLT_MIN;
+	if (z < 0 || z > height - 2) return FLT_MIN;
+
+	UINT index[4];
+	index[0] = width * z + x;
+	index[1] = width * (z + 1) + x;
+	index[2] = width * z + (x + 1);
+	index[3] = width * (z + 1) + (x + 1);
+
+	Vector3 p[4];
+	for (UINT i = 0; i < 4; i++)
+		p[i] = vertices[index[i]].Position;
+
+	Vector3 result(-1, FLT_MIN, -1);
+
+	Vector3 start(position.x, 100.f, position.z);
+	Vector3 direction(0, -1, 0);
+
+	float u, v, distance;
+	if (D3DXIntersectTri(&p[0], &p[1], &p[2], &start, &direction, &u, &v, &distance))
+		result = p[0] + (p[1] - p[0]) * u + (p[2] - p[0]) * v;
+
+	if (D3DXIntersectTri(&p[3], &p[1], &p[2], &start, &direction, &u, &v, &distance))
+		result = p[3] + (p[1] - p[3]) * u + (p[2] - p[3]) * v;
+
+	return result.y;
+}
+
 void Terrain::visibleNormal()
 {
 	//Draw Debug Normal

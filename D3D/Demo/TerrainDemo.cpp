@@ -34,7 +34,6 @@ void TerrainDemo::Update()
 	ImGui::SliderFloat("Intensity", &intensity, 1, 10);
 	terrain->Intensity(intensity);
 
-
 	terrain->Update();
 }
 

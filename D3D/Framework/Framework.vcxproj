@@ -27,6 +27,8 @@
     <ClCompile Include="Renders\DebugLine.cpp" />
     <ClCompile Include="Renders\Shader.cpp" />
     <ClCompile Include="Renders\Texture.cpp" />
+    <ClCompile Include="StaticMeshes\StaticMesh.cpp" />
+    <ClCompile Include="StaticMeshes\StaticMesh_Quad.cpp" />
     <ClCompile Include="Systems\D3D.cpp" />
     <ClCompile Include="Systems\Gui.cpp" />
     <ClCompile Include="Systems\Keyboard.cpp" />
@@ -52,6 +54,8 @@
     <ClInclude Include="Renders\DebugLine.h" />
     <ClInclude Include="Renders\Shader.h" />
     <ClInclude Include="Renders\Texture.h" />
+    <ClInclude Include="StaticMeshes\StaticMesh.h" />
+    <ClInclude Include="StaticMeshes\StaticMesh_Quad.h" />
     <ClInclude Include="Systems\D3D.h" />
     <ClInclude Include="Systems\Gui.h" />
     <ClInclude Include="Systems\IExecute.h" />
