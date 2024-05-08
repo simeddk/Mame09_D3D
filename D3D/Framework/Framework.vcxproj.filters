@@ -74,6 +74,33 @@
     <ClCompile Include="StaticMeshes\StaticMesh_Quad.cpp">
       <Filter>StaticMeshes</Filter>
     </ClCompile>
+    <ClCompile Include="StaticMeshes\StaticMesh_Plane.cpp">
+      <Filter>StaticMeshes</Filter>
+    </ClCompile>
+    <ClCompile Include="StaticMeshes\StaticMesh_Cube.cpp">
+      <Filter>StaticMeshes</Filter>
+    </ClCompile>
+    <ClCompile Include="StaticMeshes\StaticMesh_Cylinder.cpp">
+      <Filter>StaticMeshes</Filter>
+    </ClCompile>
+    <ClCompile Include="StaticMeshes\StaticMesh_Sphere.cpp">
+      <Filter>StaticMeshes</Filter>
+    </ClCompile>
+    <ClCompile Include="StaticMeshes\CubeMapMesh.cpp">
+      <Filter>StaticMeshes</Filter>
+    </ClCompile>
+    <ClCompile Include="Environment\Sky.cpp">
+      <Filter>Environment</Filter>
+    </ClCompile>
+    <ClCompile Include="Renders\Buffers.cpp">
+      <Filter>Renders</Filter>
+    </ClCompile>
+    <ClCompile Include="Renders\Transform.cpp">
+      <Filter>Renders</Filter>
+    </ClCompile>
+    <ClCompile Include="Renders\PerFrame.cpp">
+      <Filter>Renders</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Renders">
@@ -171,6 +198,33 @@
     </ClInclude>
     <ClInclude Include="StaticMeshes\StaticMesh_Quad.h">
       <Filter>StaticMeshes</Filter>
+    </ClInclude>
+    <ClInclude Include="StaticMeshes\StaticMesh_Plane.h">
+      <Filter>StaticMeshes</Filter>
+    </ClInclude>
+    <ClInclude Include="StaticMeshes\StaticMesh_Cube.h">
+      <Filter>StaticMeshes</Filter>
+    </ClInclude>
+    <ClInclude Include="StaticMeshes\StaticMesh_Cylinder.h">
+      <Filter>StaticMeshes</Filter>
+    </ClInclude>
+    <ClInclude Include="StaticMeshes\StaticMesh_Sphere.h">
+      <Filter>StaticMeshes</Filter>
+    </ClInclude>
+    <ClInclude Include="StaticMeshes\CubeMapMesh.h">
+      <Filter>StaticMeshes</Filter>
+    </ClInclude>
+    <ClInclude Include="Environment\Sky.h">
+      <Filter>Environment</Filter>
+    </ClInclude>
+    <ClInclude Include="Renders\Buffers.h">
+      <Filter>Renders</Filter>
+    </ClInclude>
+    <ClInclude Include="Renders\Transform.h">
+      <Filter>Renders</Filter>
+    </ClInclude>
+    <ClInclude Include="Renders\PerFrame.h">
+      <Filter>Renders</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -146,6 +146,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="CubeDemo.cpp" />
+    <ClCompile Include="CubeMapDemo.cpp" />
     <ClCompile Include="GetHeightDemo.cpp" />
     <ClCompile Include="GridDemo.cpp" />
     <ClCompile Include="IndexBufferDemo.cpp" />
@@ -157,6 +158,7 @@
     <ClCompile Include="PlaneDemo.cpp" />
     <ClCompile Include="PolygonDemo.cpp" />
     <ClCompile Include="SamplerStateDemo.cpp" />
+    <ClCompile Include="StaticMeshDemo.cpp" />
     <ClCompile Include="stdafx.cpp" />
     <ClCompile Include="TerrainDemo.cpp" />
     <ClCompile Include="TextureDemo.cpp" />
@@ -164,6 +166,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CubeDemo.h" />
+    <ClInclude Include="CubeMapDemo.h" />
     <ClInclude Include="GetHeightDemo.h" />
     <ClInclude Include="GridDemo.h" />
     <ClInclude Include="IndexBufferDemo.h" />
@@ -175,6 +178,7 @@
     <ClInclude Include="PlaneDemo.h" />
     <ClInclude Include="PolygonDemo.h" />
     <ClInclude Include="SamplerStateDemo.h" />
+    <ClInclude Include="StaticMeshDemo.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="TerrainDemo.h" />
     <ClInclude Include="TextureDemo.h" />

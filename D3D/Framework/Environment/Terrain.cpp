@@ -9,7 +9,9 @@ Terrain::Terrain(Shader* shader, wstring heightMapPath)
 	CreateVertexData();
 	CreateIndexData();
 	CreateNormalData();
-	CreateBuffer();
+	
+	vertexBuffer = new VertexBuffer(vertices, vertexCount, sizeof(VertexTerrain));
+	indexBuffer = new IndexBuffer(indices, indexCount);
 
 	D3DXMatrixIdentity(&world);
 }
@@ -19,8 +21,8 @@ Terrain::~Terrain()
 	SafeDeleteArray(vertices);
 	SafeDeleteArray(indices);
 
-	SafeRelease(vertexBuffer);
-	SafeRelease(indexBuffer);
+	SafeDelete(vertexBuffer);
+	SafeDelete(indexBuffer);
 
 	SafeDelete(heightMap);
 }
@@ -52,11 +54,9 @@ void Terrain::Render()
 	shader->AsScalar("Tile")->SetFloat(tile);
 	shader->AsScalar("Intensity")->SetFloat(intensity);
 
-	UINT stride = sizeof(VertexTerrain);
-	UINT offset = 0;
+	vertexBuffer->IASet();
+	indexBuffer->IASet();
 
-	D3D::GetDC()->IASetVertexBuffers(0, 1, &vertexBuffer, &stride, &offset);
-	D3D::GetDC()->IASetIndexBuffer(indexBuffer, DXGI_FORMAT_R32_UINT, 0);
 	D3D::GetDC()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
 	shader->DrawIndexed(0, pass, indexCount);
@@ -221,35 +221,6 @@ void Terrain::CreateIndexData()
 
 			index += 6;
 		}
-	}
-}
-
-void Terrain::CreateBuffer()
-{
-	//Create VertexBuffer
-	{
-		D3D11_BUFFER_DESC desc;
-		ZeroMemory(&desc, sizeof(D3D11_BUFFER_DESC));
-		desc.ByteWidth = sizeof(VertexTerrain) * vertexCount;
-		desc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
-
-		D3D11_SUBRESOURCE_DATA subResource = { 0 };
-		subResource.pSysMem = vertices;
-
-		Check(D3D::GetDevice()->CreateBuffer(&desc, &subResource, &vertexBuffer));
-	}
-
-	//Create IndexBuffer
-	{
-		D3D11_BUFFER_DESC desc;
-		ZeroMemory(&desc, sizeof(D3D11_BUFFER_DESC));
-		desc.ByteWidth = sizeof(UINT) * indexCount;
-		desc.BindFlags = D3D11_BIND_INDEX_BUFFER;
-
-		D3D11_SUBRESOURCE_DATA subResource = { 0 };
-		subResource.pSysMem = indices;
-
-		Check(D3D::GetDevice()->CreateBuffer(&desc, &subResource, &indexBuffer));
 	}
 }
 

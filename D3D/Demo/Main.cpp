@@ -16,10 +16,12 @@
 #include "SamplerStateDemo.h"
 #include "TerrainDemo.h"
 #include "GetHeightDemo.h"
+#include "StaticMeshDemo.h"
+#include "CubeMapDemo.h"
 
 void Main::Initialize()
 {
-	Push(new GetHeightDemo());
+	Push(new CubeMapDemo());
 }
 
 
