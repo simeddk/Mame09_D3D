@@ -12,13 +12,7 @@ public:
 	void Render();
 
 public:
-	void Position(float x, float y, float z);
-	void Position(Vector3& vec);
-	void Position(Vector3* vec);
-
-	void Scale(float x, float y, float z);
-	void Scale(Vector3& vec);
-	void Scale(Vector3* vec);
+	Transform* GetTrasnform() { return mesh->GetTransform(); }
 
 private:
 	Shader* shader;

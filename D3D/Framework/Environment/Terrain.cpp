@@ -2,7 +2,7 @@
 #include "Terrain.h"
 
 Terrain::Terrain(Shader* shader, wstring heightMapPath)
-	: shader(shader)
+	: StaticMeshRenderer(shader)
 {
 	heightMap = new Texture(heightMapPath);
 
@@ -12,17 +12,12 @@ Terrain::Terrain(Shader* shader, wstring heightMapPath)
 	
 	vertexBuffer = new VertexBuffer(vertices, vertexCount, sizeof(VertexTerrain));
 	indexBuffer = new IndexBuffer(indices, indexCount);
-
-	D3DXMatrixIdentity(&world);
 }
 
 Terrain::~Terrain()
 {
 	SafeDeleteArray(vertices);
 	SafeDeleteArray(indices);
-
-	SafeDelete(vertexBuffer);
-	SafeDelete(indexBuffer);
 
 	SafeDelete(heightMap);
 }
@@ -33,9 +28,7 @@ void Terrain::Update()
 	ImGui::SliderFloat3("Light Direction", lightDirection, -1, 1);
 	shader->AsVector("LightDirection")->SetFloatVector(lightDirection);
 
-	shader->AsMatrix("World")->SetMatrix(world);
-	shader->AsMatrix("View")->SetMatrix(Context::Get()->View());
-	shader->AsMatrix("Projection")->SetMatrix(Context::Get()->Projection());
+	Super::Update();
 }
 
 void Terrain::Render()
@@ -54,12 +47,9 @@ void Terrain::Render()
 	shader->AsScalar("Tile")->SetFloat(tile);
 	shader->AsScalar("Intensity")->SetFloat(intensity);
 
-	vertexBuffer->IASet();
-	indexBuffer->IASet();
+	Super::Render();
 
-	D3D::GetDC()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-
-	shader->DrawIndexed(0, pass, indexCount);
+	shader->DrawIndexed(0, Pass(), indexCount);
 }
 
 float Terrain::GetHeightByInterp(Vector3 position)

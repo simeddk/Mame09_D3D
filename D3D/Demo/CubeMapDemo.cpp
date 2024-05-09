@@ -17,8 +17,8 @@ void CubeMapDemo::Initialize()
 	cubeMapShader = new Shader(L"14_CubeMap.fxo");
 	cubeMapMesh = new CubeMapMesh(cubeMapShader);
 	cubeMapMesh->Texture(L"Environment/DesertCube1024.dds");
-	cubeMapMesh->Position(0, 20, 0);
-	cubeMapMesh->Scale(10, 10, 10);
+	cubeMapMesh->GetTrasnform()->Position(0, 20, 0);
+	cubeMapMesh->GetTrasnform()->Scale(10, 10, 10);
 }
 
 void CubeMapDemo::Destroy()
@@ -102,38 +102,38 @@ void CubeMapDemo::CreateStaticMesh()
 	quad->DiffuseMap(L"Box.png");
 
 	plane = new StaticMesh_Plane(shader, 2.5f, 2.5f);
-	plane->Scale(12, 1, 12);
+	plane->GetTransform()->Scale(12, 1, 12);
 	plane->DiffuseMap(L"Floor.png");
 
 	cube = new StaticMesh_Cube(shader);
-	cube->Position(0, 5, 0);
-	cube->Scale(20, 10, 20);
+	cube->GetTransform()->Position(0, 5, 0);
+	cube->GetTransform()->Scale(20, 10, 20);
 	cube->DiffuseMap(L"Stones.png");
 
 	for (UINT i = 0; i < 5; i++)
 	{
 		//Cylinder - Left
 		cylinders[i * 2 + 0] = new StaticMesh_Cylinder(shader, 0.3f, 0.5f, 3.f, 20, 20);
-		cylinders[i * 2 + 0]->Position(-30, 6, (float)i * 15.f - 15.f);
-		cylinders[i * 2 + 0]->Scale(5, 5, 5);
+		cylinders[i * 2 + 0]->GetTransform()->Position(-30, 6, (float)i * 15.f - 15.f);
+		cylinders[i * 2 + 0]->GetTransform()->Scale(5, 5, 5);
 		cylinders[i * 2 + 0]->DiffuseMap(L"Bricks.png");
 
 		//Cylinder - Right
 		cylinders[i * 2 + 1] = new StaticMesh_Cylinder(shader, 0.3f, 0.5f, 3.f, 20, 20);
-		cylinders[i * 2 + 1]->Position(+30, 6, (float)i * 15.f - 15.f);
-		cylinders[i * 2 + 1]->Scale(5, 5, 5);
+		cylinders[i * 2 + 1]->GetTransform()->Position(+30, 6, (float)i * 15.f - 15.f);
+		cylinders[i * 2 + 1]->GetTransform()->Scale(5, 5, 5);
 		cylinders[i * 2 + 1]->DiffuseMap(L"Bricks.png");
 
 		//Sphere - Left
 		spheres[i * 2 + 0] = new StaticMesh_Sphere(shader, 0.5f);
-		spheres[i * 2 + 0]->Position(-30, 15, (float)i * 15.f - 15.f);
-		spheres[i * 2 + 0]->Scale(5, 5, 5);
+		spheres[i * 2 + 0]->GetTransform()->Position(-30, 15, (float)i * 15.f - 15.f);
+		spheres[i * 2 + 0]->GetTransform()->Scale(5, 5, 5);
 		spheres[i * 2 + 0]->DiffuseMap(L"Wall.png");
 
 		//Sphere - Right
 		spheres[i * 2 + 1] = new StaticMesh_Sphere(shader, 0.5f);
-		spheres[i * 2 + 1]->Position(+30, 15, (float)i * 15.f - 15.f);
-		spheres[i * 2 + 1]->Scale(5, 5, 5);
+		spheres[i * 2 + 1]->GetTransform()->Position(+30, 15, (float)i * 15.f - 15.f);
+		spheres[i * 2 + 1]->GetTransform()->Scale(5, 5, 5);
 		spheres[i * 2 + 1]->DiffuseMap(L"Wall.png");
 	}
 }

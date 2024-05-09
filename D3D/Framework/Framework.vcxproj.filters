@@ -101,6 +101,12 @@
     <ClCompile Include="Renders\PerFrame.cpp">
       <Filter>Renders</Filter>
     </ClCompile>
+    <ClCompile Include="Renders\StaticMeshRenderer.cpp">
+      <Filter>Renders</Filter>
+    </ClCompile>
+    <ClCompile Include="SkeletalMeshes\SkeletalMesh.cpp">
+      <Filter>SkeletalMeshes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Renders">
@@ -120,6 +126,9 @@
     </Filter>
     <Filter Include="StaticMeshes">
       <UniqueIdentifier>{ae93a525-ace3-4f01-b1a5-d6b397ee39e9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SkeletalMeshes">
+      <UniqueIdentifier>{04d643be-4590-4cb6-8747-1d86c4191d30}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -225,6 +234,12 @@
     </ClInclude>
     <ClInclude Include="Renders\PerFrame.h">
       <Filter>Renders</Filter>
+    </ClInclude>
+    <ClInclude Include="Renders\StaticMeshRenderer.h">
+      <Filter>Renders</Filter>
+    </ClInclude>
+    <ClInclude Include="SkeletalMeshes\SkeletalMesh.h">
+      <Filter>SkeletalMeshes</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -35,33 +35,3 @@ void CubeMapMesh::Render()
 
 	mesh->Render();
 }
-
-void CubeMapMesh::Position(float x, float y, float z)
-{
-	Position(Vector3(x, y, z));
-}
-
-void CubeMapMesh::Position(Vector3& vec)
-{
-	mesh->Position(vec);
-}
-
-void CubeMapMesh::Position(Vector3* vec)
-{
-	mesh->Position(vec);
-}
-
-void CubeMapMesh::Scale(float x, float y, float z)
-{
-	Scale(Vector3(x, y, z));
-}
-
-void CubeMapMesh::Scale(Vector3& vec)
-{
-	mesh->Scale(vec);
-}
-
-void CubeMapMesh::Scale(Vector3* vec)
-{
-	mesh->Scale(vec);
-}
