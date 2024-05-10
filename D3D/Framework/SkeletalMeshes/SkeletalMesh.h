@@ -1,5 +1,7 @@
 #pragma once
 
+#define MAX_BONE_COUNT 250
+
 class SkeletalMesh
 {
 public:

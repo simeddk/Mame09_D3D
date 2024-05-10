@@ -107,6 +107,9 @@
     <ClCompile Include="SkeletalMeshes\SkeletalMesh.cpp">
       <Filter>SkeletalMeshes</Filter>
     </ClCompile>
+    <ClCompile Include="StaticMeshes\SkeletaMeshMesh.cpp">
+      <Filter>SkeletalMeshes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Renders">
@@ -239,6 +242,9 @@
       <Filter>Renders</Filter>
     </ClInclude>
     <ClInclude Include="SkeletalMeshes\SkeletalMesh.h">
+      <Filter>SkeletalMeshes</Filter>
+    </ClInclude>
+    <ClInclude Include="StaticMeshes\SkeletaMeshMesh.h">
       <Filter>SkeletalMeshes</Filter>
     </ClInclude>
   </ItemGroup>
