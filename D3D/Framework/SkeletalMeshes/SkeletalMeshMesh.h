@@ -20,7 +20,7 @@ public:
 	int ParentIndeX() { return parentIndex; }
 	SkeletalMesh_Bone* Parent() { return parent; }
 
-	Matrix& Trasnform() { return transform; }
+	Matrix& Transform() { return transform; }
 	void Transform(Matrix& matrix) { transform = matrix; }
 
 	vector<SkeletalMesh_Bone*>& Children() { return children; }

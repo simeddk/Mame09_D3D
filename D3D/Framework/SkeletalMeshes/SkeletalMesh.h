@@ -2,8 +2,37 @@
 
 #define MAX_BONE_COUNT 250
 
+class SkeletalMesh_Bone;
+class SkeletalMesh_Mesh;
+class SkeletalMesh_MeshPart;
+
 class SkeletalMesh
 {
+public:
+	friend class SkeletalMeshRenderer;
+	struct VertexSkeletalMesh;
+
+private:
+	SkeletalMesh();
+	~SkeletalMesh();
+
+private:
+	void ReadMesh(wstring file);
+
+private:
+	void BindBone();
+	void BindMesh();
+
+public:
+	UINT BoneCount() { return bones.size(); }
+	vector<SkeletalMesh_Bone*>& Bones() { return bones; }
+	SkeletalMesh_Bone* BoneByIndex(UINT index) { return bones[index]; }
+	SkeletalMesh_Bone* BoneByName(wstring index);
+
+	UINT MeshCount() { return meshes.size(); }
+	vector<SkeletalMesh_Mesh*>& Meshes() { return meshes; }
+	SkeletalMesh_Mesh* MeshByIndex(UINT index) { return meshes[index]; }
+
 public:
 	struct VertexSkeletalMesh
 	{
@@ -24,4 +53,10 @@ public:
 			BlendWeights = Vector4(0, 0, 0, 0);
 		}
 	};
+
+private:
+	SkeletalMesh_Bone* root;
+
+	vector<SkeletalMesh_Bone*> bones;
+	vector<SkeletalMesh_Mesh*> meshes;
 };

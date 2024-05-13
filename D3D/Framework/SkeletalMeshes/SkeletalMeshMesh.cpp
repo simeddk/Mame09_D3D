@@ -1,5 +1,5 @@
 #include "Framework.h"
-#include "SkeletaMeshMesh.h"
+#include "SkeletalMeshMesh.h"
 
 SkeletalMesh_Mesh::SkeletalMesh_Mesh()
 {
@@ -97,11 +97,12 @@ void SkeletalMesh_Mesh::SetTransform(Transform* trasnform)
 //-----------------------------------------------------------------------------
 void SkeletalMesh_MeshPart::Update()
 {
-	//Todo. Material 관련 코드
+	
 }
 
 void SkeletalMesh_MeshPart::Render()
 {
+	shader->DrawIndexed(0, pass, indexCount, startIndex);
 }
 
 void SkeletalMesh_MeshPart::Binding(SkeletalMesh* skeletalMesh)
@@ -110,4 +111,5 @@ void SkeletalMesh_MeshPart::Binding(SkeletalMesh* skeletalMesh)
 
 void SkeletalMesh_MeshPart::SetShader(Shader* shader)
 {
+	this->shader = shader;
 }

@@ -94,6 +94,8 @@ typedef D3DXPLANE Plane;
 #include "StaticMeshes/StaticMesh_Sphere.h"
 
 #include "SkeletalMeshes/SkeletalMesh.h"
+#include "SkeletalMeshes/SkeletalMeshMesh.h"
+#include "SkeletalMeshes/SkeletalMeshRenderer.h"
 
 #include "Environment/Terrain.h"
 #include "Environment/Sky.h"
