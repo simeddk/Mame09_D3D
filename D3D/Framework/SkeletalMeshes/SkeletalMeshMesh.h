@@ -62,7 +62,7 @@ public:
 	SkeletalMesh_Bone* Bone() { return bone; }
 
 	void Transforms(Matrix* transforms); //Component(Bone) Space
-	void SetTransform(Transform* trasnform); //Actor(World)Transform
+	void SetTransform(Transform* transform); //Actor(World)Transform
 
 private:
 	struct BoneDesc

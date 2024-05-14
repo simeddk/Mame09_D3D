@@ -87,7 +87,7 @@ void SkeletalMesh_Mesh::Transforms(Matrix* transforms)
 	memcpy(boneDesc.Transforms, transforms, sizeof(Matrix) * MAX_BONE_COUNT);
 }
 
-void SkeletalMesh_Mesh::SetTransform(Transform* trasnform)
+void SkeletalMesh_Mesh::SetTransform(Transform* transform)
 {
 	this->transform->Set(transform);
 }

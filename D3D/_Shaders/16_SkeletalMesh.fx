@@ -1,7 +1,6 @@
 #include "00_Global.fx"
 
 float3 LightDirection;
-Texture2D DiffuseMap;
 
 //Reder
 struct VertexInput
@@ -14,6 +13,14 @@ struct VertexInput
 	float4 BlendWeights : BlendWeights;
 };
 
+#define MAX_BONE_COUNT 250
+cbuffer CB_Bones
+{
+	Matrix BoneTransforms[MAX_BONE_COUNT]; //Component(Bone) Space
+
+	uint BoneIndex;
+};
+
 struct VertexOutput
 {
 	float4 Position : SV_Position;
@@ -21,12 +28,13 @@ struct VertexOutput
 	float3 Normal : Normal;
 };
 
-//Todo. Cbuffer Param -> VS code
-
 VertexOutput VS(VertexInput input)
 {
 	VertexOutput output;
-	output.Position = WorldPosition(input.Position);
+	
+	World = mul(BoneTransforms[BoneIndex], World);
+	
+	output.Position = WorldPosition(input.Position); //00 World
 	output.Position = ViewProjection(output.Position);
 	
 	output.Normal = WorldNormal(input.Normal);
@@ -41,7 +49,7 @@ float4 PS_Diffuse(VertexOutput input) : SV_Target
 	float3 normal = normalize(input.Normal);
 	float lambert = saturate(dot(normal, -LightDirection));
 
-	float4 diffuseColor = DiffuseMap.Sample(LinearSampler, input.Uv);
+	float4 diffuseColor = float4(1, 1, 1, 1);
 	return diffuseColor * lambert;
 }
 

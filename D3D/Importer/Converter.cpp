@@ -178,3 +178,28 @@ void Converter::WriteMeshData(wstring savePath)
 
 	SafeDelete(w);
 }
+
+void Converter::ExportMatrial(wstring savePath, bool bOverWrite)
+{
+	//Todo. ExportMatrial
+	ReadMaterialData();
+	WriteMaterialData();
+}
+
+void Converter::ReadMaterialData()
+{
+}
+
+bool Converter::FoundMaterialData(aiMaterial* material)
+{
+	return false;
+}
+
+void Converter::WriteMaterialData(wstring savePath)
+{
+}
+
+string Converter::WriteTexture(string savePath, string file)
+{
+	return string();
+}

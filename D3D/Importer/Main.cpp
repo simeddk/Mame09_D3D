@@ -3,10 +3,12 @@
 #include "Systems/Window.h"
 
 #include "ExportFile.h"
+#include "SkeletalMeshDemo.h"
 
 void Main::Initialize()
 {
 	Push(new ExportFile());
+	Push(new SkeletalMeshDemo());
 }
 
 

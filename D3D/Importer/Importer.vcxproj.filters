@@ -3,14 +3,36 @@
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="stdafx.cpp" />
-    <ClCompile Include="Converter.cpp" />
-    <ClCompile Include="ExportFile.cpp" />
+    <ClCompile Include="Converter.cpp">
+      <Filter>Converter</Filter>
+    </ClCompile>
+    <ClCompile Include="ExportFile.cpp">
+      <Filter>Converter</Filter>
+    </ClCompile>
+    <ClCompile Include="SkeletalMeshDemo.cpp">
+      <Filter>Demo</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Main.h" />
     <ClInclude Include="stdafx.h" />
-    <ClInclude Include="Converter.h" />
-    <ClInclude Include="ExportFile.h" />
     <ClInclude Include="Types.h" />
+    <ClInclude Include="Converter.h">
+      <Filter>Converter</Filter>
+    </ClInclude>
+    <ClInclude Include="ExportFile.h">
+      <Filter>Converter</Filter>
+    </ClInclude>
+    <ClInclude Include="SkeletalMeshDemo.h">
+      <Filter>Demo</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Converter">
+      <UniqueIdentifier>{576c31b4-937a-4210-bb90-6efc4bbcaa02}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Demo">
+      <UniqueIdentifier>{8663ee96-875c-48a8-b808-b76876588c3f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

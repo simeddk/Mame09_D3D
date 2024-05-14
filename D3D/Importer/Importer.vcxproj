@@ -148,12 +148,14 @@
     <ClCompile Include="Converter.cpp" />
     <ClCompile Include="ExportFile.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="SkeletalMeshDemo.cpp" />
     <ClCompile Include="stdafx.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Converter.h" />
     <ClInclude Include="ExportFile.h" />
     <ClInclude Include="Main.h" />
+    <ClInclude Include="SkeletalMeshDemo.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Types.h" />
   </ItemGroup>
