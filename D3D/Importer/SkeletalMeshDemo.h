@@ -16,9 +16,11 @@ public:
 private:
 	void Tank();
 	void Kachujin();
+	void Tower();
 
 private:
 	Shader* shader;
 	SkeletalMeshRenderer* tank = nullptr;
 	SkeletalMeshRenderer* kachujin = nullptr;
+	SkeletalMeshRenderer* tower = nullptr;
 };

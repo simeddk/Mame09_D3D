@@ -7,6 +7,7 @@ void SkeletalMeshDemo::Initialize()
 
 	Tank();
 	Kachujin();
+	Tower();
 }
 
 void SkeletalMeshDemo::Destroy()
@@ -15,6 +16,7 @@ void SkeletalMeshDemo::Destroy()
 
 	SafeDelete(tank);
 	SafeDelete(kachujin);
+	SafeDelete(tower);
 }
 
 void SkeletalMeshDemo::Update()
@@ -41,6 +43,12 @@ void SkeletalMeshDemo::Update()
 		kachujin->Pass(pass);
 		kachujin->Update();
 	}
+
+	if (tower != nullptr)
+	{
+		tower->Pass(pass);
+		tower->Update();
+	}
 }
 
 void SkeletalMeshDemo::Render()
@@ -50,6 +58,9 @@ void SkeletalMeshDemo::Render()
 
 	if (kachujin != nullptr)
 		kachujin->Render();
+
+	if (tower != nullptr)
+		tower->Render();
 }
 
 void SkeletalMeshDemo::Tank()
@@ -62,7 +73,14 @@ void SkeletalMeshDemo::Kachujin()
 {
 	kachujin = new SkeletalMeshRenderer(shader);
 	kachujin->ReadMesh(L"Kachujin/Mesh");
-
 	kachujin->GetTransform()->Position(5, 0, 0);
 	kachujin->GetTransform()->Scale(0.01f, 0.01f, 0.01f);
+}
+
+void SkeletalMeshDemo::Tower()
+{
+	tower = new SkeletalMeshRenderer(shader);
+	tower->ReadMesh(L"Tower/Tower");
+	tower->GetTransform()->Position(-5, 0, 0);
+	tower->GetTransform()->Scale(0.01f, 0.01f, 0.01f);
 }

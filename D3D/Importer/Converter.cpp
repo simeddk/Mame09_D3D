@@ -2,6 +2,7 @@
 #include "Converter.h"
 #include "Types.h"
 #include "Utilities/BinaryFile.h"
+#include "Utilities/Xml.h"
 
 Converter::Converter()
 {
@@ -22,6 +23,9 @@ Converter::~Converter()
 
 		SafeDelete(mesh);
 	}
+
+	 for (asMaterial* materia : materials)
+		 SafeDelete(materia);
 }
 
 void Converter::ReadFile(wstring file)
@@ -179,27 +183,186 @@ void Converter::WriteMeshData(wstring savePath)
 	SafeDelete(w);
 }
 
-void Converter::ExportMatrial(wstring savePath, bool bOverWrite)
+void Converter::ExportMatrial(wstring savePath/*Tank/Tank.material*/, bool bOverWrite)
 {
-	//Todo. ExportMatrial
+	savePath = L"../../_Textures/" + savePath + L".material";
+
+	if (bOverWrite == false)
+	{
+		if (Path::ExistFile(savePath) == true)
+			return;
+	}
+
 	ReadMaterialData();
-	WriteMaterialData();
+	WriteMaterialData(savePath); 
 }
 
 void Converter::ReadMaterialData()
 {
+	for (UINT i = 0; i < scene->mNumMaterials; i++)
+	{
+		aiMaterial* srcMaterial = scene->mMaterials[i];
+
+		if (FoundMaterialData(srcMaterial) == false)
+			continue;
+
+		asMaterial* material = new asMaterial();
+
+		material->Name = srcMaterial->GetName().C_Str();
+
+		//Get Color
+		aiColor3D color;
+
+		srcMaterial->Get(AI_MATKEY_COLOR_AMBIENT, color);
+		material->Ambient = Color(color.r, color.g, color.b, 1.f);
+
+		srcMaterial->Get(AI_MATKEY_COLOR_DIFFUSE, color);
+		material->Diffuse = Color(color.r, color.g, color.b, 1.f);
+
+		srcMaterial->Get(AI_MATKEY_COLOR_SPECULAR, color);
+		material->Specular = Color(color.r, color.g, color.b, 1.f);
+
+		srcMaterial->Get(AI_MATKEY_SHININESS, material->Specular.a);
+
+		srcMaterial->Get(AI_MATKEY_COLOR_EMISSIVE, color);
+		material->Emissive = Color(color.r, color.g, color.b, 1.f);
+
+		//Get MapFile
+		aiString file;
+
+		srcMaterial->GetTexture(aiTextureType_DIFFUSE, 0, &file);
+		material->DiffuseFile = file.C_Str();
+
+		srcMaterial->GetTexture(aiTextureType_SPECULAR, 0, &file);
+		material->SpecularFile = file.C_Str();
+
+		srcMaterial->GetTexture(aiTextureType_NORMALS, 0, &file);
+		material->NormalFile = file.C_Str();
+
+		materials.push_back(material);
+	}
 }
 
 bool Converter::FoundMaterialData(aiMaterial* material)
 {
+	string materialName = material->GetName().C_Str();
+
+	for (asMesh* mesh : meshes)
+	{
+		for (asMeshPart* part : mesh->MeshParts)
+		{
+			if (part->MaterialName == materialName)
+				return true;
+		}
+	}
+
 	return false;
 }
 
-void Converter::WriteMaterialData(wstring savePath)
+void Converter::WriteMaterialData(wstring savePath) //L"../../_Textures/Tank/Tank.material"
 {
+	string folder = String::ToString(Path::GetDirectoryName(savePath));
+	string file = String::ToString(Path::GetFileName(savePath));
+
+	Path::CreateFolders(folder);
+
+	Xml::XMLDocument* document = new Xml::XMLDocument();
+	
+	Xml::XMLDeclaration* decl =	document->NewDeclaration();
+	document->LinkEndChild(decl);
+
+	Xml::XMLElement* root = document->NewElement("Materials"); //<Materials></Materials>
+	root->SetAttribute("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
+	root->SetAttribute("xmlns:xsd", "http://www.w3.org/2001/XMLSchema");
+	document->LinkEndChild(root);
+
+	for (asMaterial* material : materials)
+	{
+		Xml::XMLElement* node = document->NewElement("Material"); //<Materials>
+		root->LinkEndChild(node);
+
+		Xml::XMLElement* element = nullptr;
+
+		element = document->NewElement("Name"); //<Name>
+		element->SetText(material->Name.c_str());
+		node->LinkEndChild(element);
+
+		element = document->NewElement("DiffuseFile"); //<DiffuseFile>
+		element->SetText(WriteTexture(folder, material->DiffuseFile).c_str());
+		node->LinkEndChild(element);
+
+		element = document->NewElement("SpecularFile"); //<SpecularFile>
+		element->SetText(WriteTexture(folder, material->SpecularFile).c_str());
+		node->LinkEndChild(element);
+
+		element = document->NewElement("NormalFile"); //<NormalFile>
+		element->SetText(WriteTexture(folder, material->NormalFile).c_str());
+		node->LinkEndChild(element);
+
+		element = document->NewElement("Ambient"); //<Ambient>
+		element->SetAttribute("R", material->Ambient.r);
+		element->SetAttribute("G", material->Ambient.g);
+		element->SetAttribute("B", material->Ambient.b);
+		element->SetAttribute("A", material->Ambient.a);
+		node->LinkEndChild(element);
+
+		element = document->NewElement("Diffuse"); //<Diffuse>
+		element->SetAttribute("R", material->Diffuse.r);
+		element->SetAttribute("G", material->Diffuse.g);
+		element->SetAttribute("B", material->Diffuse.b);
+		element->SetAttribute("A", material->Diffuse.a);
+		node->LinkEndChild(element);
+
+		element = document->NewElement("Specular"); //<Specular>
+		element->SetAttribute("R", material->Specular.r);
+		element->SetAttribute("G", material->Specular.g);
+		element->SetAttribute("B", material->Specular.b);
+		element->SetAttribute("A", material->Specular.a);
+		node->LinkEndChild(element);
+
+		element = document->NewElement("Emissive"); //<Emissive>
+		element->SetAttribute("R", material->Emissive.r);
+		element->SetAttribute("G", material->Emissive.g);
+		element->SetAttribute("B", material->Emissive.b);
+		element->SetAttribute("A", material->Emissive.a);
+		node->LinkEndChild(element);
+	}
+
+	document->SaveFile((folder + file).c_str());
+	SafeDelete(document);
 }
 
-string Converter::WriteTexture(string savePath, string file)
+string Converter::WriteTexture(string saveFolder, string file)
 {
-	return string();
+	if (file.length() < 1) return "";
+
+	string fileName = Path::GetFileName(file);
+	const aiTexture* embededTexture = scene->GetEmbeddedTexture(file.c_str());
+
+	string path = "";
+
+	if (embededTexture != nullptr)
+	{
+		path = saveFolder + Path::GetFileNameWithoutExtension(file) + ".png";
+
+		BinaryWriter* w = new BinaryWriter(String::ToWString(path));
+		w->Byte(embededTexture->pcData, embededTexture->mWidth);
+		SafeDelete(w);
+	}
+	else
+	{
+		string directory = Path::GetDirectoryName(String::ToString(this->file));
+		string origin = directory + file;
+		String::Replace(&origin, "\\", "/");
+
+		if (Path::ExistFile(origin) == false)
+			return "";
+
+		path = saveFolder + fileName;
+		CopyFileA(origin.c_str(), path.c_str(), FALSE);
+
+		String::Replace(&path, "../../_Textures/", "");
+	}
+
+	return Path::GetFileName(path);
 }
