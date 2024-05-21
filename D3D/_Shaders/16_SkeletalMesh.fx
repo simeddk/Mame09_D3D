@@ -1,4 +1,5 @@
 #include "00_Global.fx"
+#include "00_Light.fx"
 
 float3 LightDirection;
 
@@ -49,7 +50,7 @@ float4 PS_Diffuse(VertexOutput input) : SV_Target
 	float3 normal = normalize(input.Normal);
 	float lambert = saturate(dot(normal, -LightDirection));
 
-	float4 diffuseColor = float4(1, 1, 1, 1);
+	float4 diffuseColor = DiffuseMap.Sample(LinearSampler, input.Uv);
 	return diffuseColor * lambert;
 }
 

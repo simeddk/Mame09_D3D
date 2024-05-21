@@ -18,6 +18,7 @@ private:
 
 private:
 	void ReadMesh(wstring file);
+	void ReadMaterial(wstring file);
 
 private:
 	void BindBone();
@@ -27,11 +28,16 @@ public:
 	UINT BoneCount() { return bones.size(); }
 	vector<SkeletalMesh_Bone*>& Bones() { return bones; }
 	SkeletalMesh_Bone* BoneByIndex(UINT index) { return bones[index]; }
-	SkeletalMesh_Bone* BoneByName(wstring index);
+	SkeletalMesh_Bone* BoneByName(wstring name);
 
 	UINT MeshCount() { return meshes.size(); }
 	vector<SkeletalMesh_Mesh*>& Meshes() { return meshes; }
 	SkeletalMesh_Mesh* MeshByIndex(UINT index) { return meshes[index]; }
+
+	UINT MaterialCount() { return materials.size(); }
+	vector<Material*>& Materials() { return materials; }
+	Material* MaterialByIndex(UINT index) { return materials[index]; }
+	Material* MaterialByName(wstring name);
 
 public:
 	struct VertexSkeletalMesh
@@ -59,4 +65,5 @@ private:
 
 	vector<SkeletalMesh_Bone*> bones;
 	vector<SkeletalMesh_Mesh*> meshes;
+	vector<Material*> materials;
 };

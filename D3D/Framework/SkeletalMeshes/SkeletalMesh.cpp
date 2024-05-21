@@ -1,6 +1,7 @@
 #include "Framework.h"
 #include "SkeletalMesh.h"
 #include "Utilities/BinaryFile.h"
+#include "Utilities/Xml.h"
 
 SkeletalMesh::SkeletalMesh()
 {
@@ -13,6 +14,9 @@ SkeletalMesh::~SkeletalMesh()
 
     for (SkeletalMesh_Mesh* mesh : meshes)
         SafeDelete(mesh);
+
+    for (Material* material : materials)
+        SafeDelete(material);
 }
 
 void SkeletalMesh::ReadMesh(wstring file)
@@ -106,6 +110,85 @@ void SkeletalMesh::ReadMesh(wstring file)
     SafeDelete(r);
 
     BindBone();
+    
+}
+
+void SkeletalMesh::ReadMaterial(wstring file)
+{
+    file = L"../../_Textures/" + file + L".material";
+
+    Xml::XMLDocument* document = new  Xml::XMLDocument();
+    Xml::XMLError error = document->LoadFile(String::ToString(file).c_str());
+    assert(error == Xml::XML_SUCCESS);
+
+    Xml::XMLElement* root = document->FirstChildElement(); //<Materials>
+    Xml::XMLElement* materialNode = root->FirstChildElement(); //<Material>
+
+    do
+    {
+        Material* material = new Material();
+
+        Xml::XMLElement* node = nullptr;
+
+        node = materialNode->FirstChildElement(); //<Name>
+        material->Name(String::ToWString(node->GetText()));
+
+        wstring directory = Path::GetDirectoryName(file);
+        String::Replace(&directory, L"../../_Textures/", L"");
+
+        wstring texture = L"";
+
+        node = node->NextSiblingElement(); //<Diffusefile>
+        texture = String::ToWString(node->GetText());
+        if (texture.length() > 0)
+            material->DiffuseMap(directory + texture);
+
+        node = node->NextSiblingElement(); //<Sepcularfile>
+        texture = String::ToWString(node->GetText());
+        if (texture.length() > 0)
+            material->SpecularMap(directory + texture);
+
+        node = node->NextSiblingElement(); //<NormalFile>
+        texture = String::ToWString(node->GetText());
+        if (texture.length() > 0)
+            material->NormalMap(directory + texture);
+
+        Color color;
+
+        node = node->NextSiblingElement(); //<Ambient>
+        color.r =  node->FloatAttribute("R");
+        color.g =  node->FloatAttribute("G");
+        color.b =  node->FloatAttribute("B");
+        color.a =  node->FloatAttribute("A");
+        material->Ambient(color);
+
+        node = node->NextSiblingElement(); //<Diffuse>
+        color.r = node->FloatAttribute("R");
+        color.g = node->FloatAttribute("G");
+        color.b = node->FloatAttribute("B");
+        color.a = node->FloatAttribute("A");
+        material->Diffuse(color);
+
+        node = node->NextSiblingElement(); //<Specular>
+        color.r = node->FloatAttribute("R");
+        color.g = node->FloatAttribute("G");
+        color.b = node->FloatAttribute("B");
+        color.a = node->FloatAttribute("A");
+        material->Specular(color);
+
+        node = node->NextSiblingElement(); //<Emissive>
+        color.r = node->FloatAttribute("R");
+        color.g = node->FloatAttribute("G");
+        color.b = node->FloatAttribute("B");
+        color.a = node->FloatAttribute("A");
+        material->Emissive(color);
+
+        materials.push_back(material);
+
+        materialNode = materialNode->NextSiblingElement();
+    } while (materialNode != nullptr);
+
+
     BindMesh();
 }
 
@@ -134,12 +217,23 @@ void SkeletalMesh::BindMesh()
     }
 }
 
-SkeletalMesh_Bone* SkeletalMesh::BoneByName(wstring index)
+SkeletalMesh_Bone* SkeletalMesh::BoneByName(wstring name)
 {
     for (SkeletalMesh_Bone* bone : bones)
     {
-        if (bone->Name() == index)
+        if (bone->Name() == name)
             return bone;
+    }
+
+    return nullptr;
+}
+
+Material* SkeletalMesh::MaterialByName(wstring name)
+{
+    for (Material* material : materials)
+    {
+        if (material->Name() == name)
+            return material;
     }
 
     return nullptr;

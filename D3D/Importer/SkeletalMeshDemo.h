@@ -17,10 +17,12 @@ private:
 	void Tank();
 	void Kachujin();
 	void Tower();
+	void Airplane();
 
 private:
 	Shader* shader;
 	SkeletalMeshRenderer* tank = nullptr;
 	SkeletalMeshRenderer* kachujin = nullptr;
 	SkeletalMeshRenderer* tower = nullptr;
+	SkeletalMeshRenderer* airplane = nullptr;
 };

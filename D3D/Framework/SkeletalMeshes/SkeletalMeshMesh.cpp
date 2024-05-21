@@ -92,9 +92,15 @@ void SkeletalMesh_Mesh::SetTransform(Transform* transform)
 	this->transform->Set(transform);
 }
 
+
 //-----------------------------------------------------------------------------
 //SkeletalMesh_MeshPart
 //-----------------------------------------------------------------------------
+SkeletalMesh_MeshPart::~SkeletalMesh_MeshPart()
+{
+	SafeDelete(material);
+}
+
 void SkeletalMesh_MeshPart::Update()
 {
 	
@@ -102,14 +108,35 @@ void SkeletalMesh_MeshPart::Update()
 
 void SkeletalMesh_MeshPart::Render()
 {
+	material->Render();
+
 	shader->DrawIndexed(0, pass, indexCount, startIndex);
 }
 
 void SkeletalMesh_MeshPart::Binding(SkeletalMesh* skeletalMesh)
 {
+	Material* srcMaterial = skeletalMesh->MaterialByName(materialName);
+
+	material = new Material();
+	material->Ambient(srcMaterial->Ambient());
+	material->Diffuse(srcMaterial->Diffuse());
+	material->Specular(srcMaterial->Specular());
+	material->Emissive(srcMaterial->Emissive());
+
+	if (srcMaterial->DiffuseMap() != nullptr)
+		material->DiffuseMap(srcMaterial->DiffuseMap()->GetFile());
+
+	if (srcMaterial->SpecularMap() != nullptr)
+		material->SpecularMap(srcMaterial->SpecularMap()->GetFile());
+
+	if (srcMaterial->NormalMap() != nullptr)
+		material->NormalMap(srcMaterial->NormalMap()->GetFile());
+	
 }
 
 void SkeletalMesh_MeshPart::SetShader(Shader* shader)
 {
 	this->shader = shader;
+
+	material->SetShader(this->shader);
 }
