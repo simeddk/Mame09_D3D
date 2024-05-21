@@ -2,7 +2,7 @@
 <Materials xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
     <Material>
         <Name>turret_phong</Name>
-        <DiffuseFile></DiffuseFile>
+        <DiffuseFile>turret.tga</DiffuseFile>
         <SpecularFile></SpecularFile>
         <NormalFile></NormalFile>
         <Ambient R="0.2" G="0.2" B="0.2" A="1"/>
@@ -12,7 +12,7 @@
     </Material>
     <Material>
         <Name>engine_phong</Name>
-        <DiffuseFile></DiffuseFile>
+        <DiffuseFile>engine.tga</DiffuseFile>
         <SpecularFile></SpecularFile>
         <NormalFile></NormalFile>
         <Ambient R="0.2" G="0.2" B="0.2" A="1"/>

@@ -17,6 +17,7 @@ public:
 private:
 	void ReadBoneData(aiNode* node, int index, int parent);
 	void ReadMeshData(aiNode* node, int index);
+	void ReadSkinData();
 	void WriteMeshData(wstring savePath);
 
 //----------------------------------------------------------------------------
@@ -30,6 +31,15 @@ private:
 	bool FoundMaterialData(aiMaterial* material);
 	void WriteMaterialData(wstring savePath);
 	string WriteTexture(string saveFolder, string file);
+
+//----------------------------------------------------------------------------
+//Export Animation
+//----------------------------------------------------------------------------
+public:
+	void ExportAnimClip(UINT index, wstring savePath);
+
+private:
+
 
 private:
 	wstring file;
