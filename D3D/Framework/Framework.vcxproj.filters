@@ -116,6 +116,9 @@
     <ClCompile Include="Renders\Material.cpp">
       <Filter>Renders</Filter>
     </ClCompile>
+    <ClCompile Include="SkeletalMeshes\SkeletalMeshClip.cpp">
+      <Filter>SkeletalMeshes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Renders">
@@ -258,6 +261,9 @@
     </ClInclude>
     <ClInclude Include="Renders\Material.h">
       <Filter>Renders</Filter>
+    </ClInclude>
+    <ClInclude Include="SkeletalMeshes\SkeletalMeshClip.h">
+      <Filter>SkeletalMeshes</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
