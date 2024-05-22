@@ -39,6 +39,9 @@ public:
 	void ExportAnimClip(UINT index, wstring savePath);
 
 private:
+	struct asClip* ReadClipData(aiAnimation* animation);
+	void ReadKeyframeData(struct asClip* clip, aiNode* node, vector<struct asClipNode>& aniNodeInfos);
+	void WriteClipData(struct asClip* clip, wstring savePath);
 
 
 private:

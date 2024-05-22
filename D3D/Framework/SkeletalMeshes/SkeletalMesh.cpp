@@ -17,6 +17,9 @@ SkeletalMesh::~SkeletalMesh()
 
     for (Material* material : materials)
         SafeDelete(material);
+
+    for (SkeletalMeshClip* clip : clips)
+        SafeDelete(clip);
 }
 
 void SkeletalMesh::ReadMesh(wstring file)
@@ -192,6 +195,12 @@ void SkeletalMesh::ReadMaterial(wstring file)
     BindMesh();
 }
 
+//Todo. *.clip 파일 읽어오기
+void SkeletalMesh::ReadClip(wstring file)
+{
+
+}
+
 void SkeletalMesh::BindBone()
 {
     root = bones[0];
@@ -236,5 +245,10 @@ Material* SkeletalMesh::MaterialByName(wstring name)
             return material;
     }
 
+    return nullptr;
+}
+
+SkeletalMeshClip* SkeletalMesh::ClipByName(wstring name)
+{
     return nullptr;
 }

@@ -158,5 +158,34 @@ public:
 //1 Bone, 1 Frame
 struct asKeyframeData
 {
-	//Todo. SRT
+	float Frame;
+
+	Vector3 Scale;
+	Quaternion Rotation;
+	Vector3 Translation;
+};
+
+//1 Bone , All Frames
+struct asKeyframe
+{
+	string BoneName;
+	vector<asKeyframeData> Transforms;
+};
+
+//All bones, All Frames(Final Data)
+struct asClip
+{
+	string Name;
+
+	UINT FrameCount;
+	float FrameRate;
+
+	vector<asKeyframe*> Keyframes;
+};
+
+//Cache for "Retarget"
+struct asClipNode
+{
+	aiString Name;
+	vector<asKeyframeData> keyframe;
 };
