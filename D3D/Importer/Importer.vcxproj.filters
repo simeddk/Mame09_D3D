@@ -12,6 +12,9 @@
     <ClCompile Include="SkeletalMeshDemo.cpp">
       <Filter>Demo</Filter>
     </ClCompile>
+    <ClCompile Include="AnimationDemo.cpp">
+      <Filter>Demo</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Main.h" />
@@ -24,6 +27,9 @@
       <Filter>Converter</Filter>
     </ClInclude>
     <ClInclude Include="SkeletalMeshDemo.h">
+      <Filter>Demo</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimationDemo.h">
       <Filter>Demo</Filter>
     </ClInclude>
   </ItemGroup>
