@@ -195,10 +195,39 @@ void SkeletalMesh::ReadMaterial(wstring file)
     BindMesh();
 }
 
-//Todo. *.clip 파일 읽어오기
 void SkeletalMesh::ReadClip(wstring file)
 {
+    file = L"../../_Models/" + file + L".clip";
 
+    BinaryReader* r = new BinaryReader(file);
+
+    SkeletalMeshClip* clip = new SkeletalMeshClip();
+
+    clip->name = String::ToWString(r->String());
+    clip->frameRate = r->Float();
+    clip->frameCount = r->UInt();
+
+    UINT keyFrameCount = r->UInt();
+    for (UINT i = 0; i < keyFrameCount; i++)
+    {
+        SkeletalMeshKeyframe* keyframe = new SkeletalMeshKeyframe();
+        keyframe->BoneName = String::ToWString(r->String());
+
+        UINT size = r->UInt();
+        if (size > 0)
+        {
+            keyframe->Transforms.assign(size, SkeletalMeshKeyframeData());
+
+            void* ptr = (void*)&keyframe->Transforms[0];
+            r->Byte(&ptr, sizeof(SkeletalMeshKeyframeData) * size);
+        }
+
+        clip->keyframeMap[keyframe->BoneName] = keyframe;
+    }
+
+    SafeDelete(r);
+
+    clips.push_back(clip);
 }
 
 void SkeletalMesh::BindBone()
@@ -250,5 +279,11 @@ Material* SkeletalMesh::MaterialByName(wstring name)
 
 SkeletalMeshClip* SkeletalMesh::ClipByName(wstring name)
 {
+    for (SkeletalMeshClip* clip : clips)
+    {
+        if (clip->name == name)
+            return clip;
+    }
+
     return nullptr;
 }
