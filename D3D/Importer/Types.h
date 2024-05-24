@@ -65,15 +65,15 @@ struct asBlendWeight
 
 	void Set(UINT index, UINT boneIndex, float weight)
 	{
-		float i = boneIndex;
+		float i = (float)boneIndex;
 		float w = weight;
 
 		switch (index)
 		{
-			case 0: Indices.x = i; Weights.x = weight; break;
-			case 1: Indices.y = i; Weights.y = weight; break;
-			case 2: Indices.z = i; Weights.z = weight; break;
-			case 3: Indices.w = i; Weights.w = weight; break;
+			case 0: Indices.x = i; Weights.x = w; break;
+			case 1: Indices.y = i; Weights.y = w; break;
+			case 2: Indices.z = i; Weights.z = w; break;
+			case 3: Indices.w = i; Weights.w = w; break;
 		}
 	}
 };
