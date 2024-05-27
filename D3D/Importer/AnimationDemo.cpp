@@ -19,6 +19,23 @@ void AnimationDemo::Destroy()
 
 void AnimationDemo::Update()
 {
+	//Tweening Test
+	static int clip = 0;
+	static float speed = 1.f;
+	static float takeTime = 0.25f;
+
+	ImGui::InputInt("Clip", &clip);
+	clip = Math::Clamp(clip, 0, 4);
+
+	const char* clipsName[] = { "Idle", "Walk", "Run", "Slash", "Dance" };
+	ImGui::Text("%s", clipsName[clip]);
+	ImGui::SliderFloat("Speed", &speed, 0.1f, 5.f);
+	ImGui::SliderFloat("TakeTime", &takeTime, 0.1f, 5.f);
+
+	if (ImGui::Button("Apply"))
+		kachujin->PlayTweenMode(clip, speed, takeTime);
+	
+
 	//Light Direction Test
 	static Vector3 lightDirection = Vector3(-1, -1, 1);
 	ImGui::SliderFloat3("Light Direction", lightDirection, -1, 1);
@@ -49,6 +66,10 @@ void AnimationDemo::Kachujin()
 	kachujin->ReadMesh(L"Kachujin/Mesh");
 	kachujin->ReadMaterial(L"Kachujin/Mesh");
 	kachujin->ReadClip(L"Kachujin/Idle");
+	kachujin->ReadClip(L"Kachujin/Walk");
+	kachujin->ReadClip(L"Kachujin/Run");
+	kachujin->ReadClip(L"Kachujin/Slash");
+	kachujin->ReadClip(L"Kachujin/Uprock");
 
 	kachujin->GetTransform()->Position(0, 0, 0);
 	kachujin->GetTransform()->Scale(0.01f, 0.01f, 0.01f);

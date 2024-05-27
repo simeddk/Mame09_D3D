@@ -14,6 +14,13 @@ struct VertexInput
 	float4 BlendWeights : BlendWeights;
 };
 
+struct VertexOutput
+{
+	float4 Position : SV_Position;
+	float2 Uv : Uv;
+	float3 Normal : Normal;
+};
+
 #define MAX_BONE_COUNT 250
 cbuffer CB_Bones
 {
@@ -35,16 +42,20 @@ struct KeyframeDesc
 	float Speed;
 };
 
-cbuffer CB_Keyframes
+struct TweenFrame
 {
-	KeyframeDesc AnimationFrames;
+	float TakeTime;
+	float TweenTime;
+	float ChangeTime;
+	float Padding;
+
+	KeyframeDesc Curr;
+	KeyframeDesc Next;
 };
 
-struct VertexOutput
+cbuffer CB_Animationframe
 {
-	float4 Position : SV_Position;
-	float2 Uv : Uv;
-	float3 Normal : Normal;
+	TweenFrame TweenFrames;
 };
 
 Texture2DArray TransformsMap;
@@ -54,31 +65,86 @@ void SetAnimationWorld(inout matrix world, VertexInput input)
 	float indices[4] = { input.BlendIndices.x, input.BlendIndices.y, input.BlendIndices.z, input.BlendIndices.w };
 	float weights[4] = { input.BlendWeights.x, input.BlendWeights.y, input.BlendWeights.z, input.BlendWeights.w };
 	
-	int clip;
-	int currFrame;
+	//[0]currClip, [1]nextClip
+	int clip[2];
+	int currFrame[2], nextFrame[2];
+	float time[2];
 	
-	clip = AnimationFrames.Clip;
-	currFrame = AnimationFrames.CurrFrame;
+	//currentClip
+	clip[0] = TweenFrames.Curr.Clip;
+	currFrame[0] = TweenFrames.Curr.CurrFrame;
+	nextFrame[0] = TweenFrames.Curr.NextFrame;
+	time[0] = TweenFrames.Curr.Time;
+	
+	//nextClip
+	clip[1] = TweenFrames.Next.Clip;
+	currFrame[1] = TweenFrames.Next.CurrFrame;
+	nextFrame[1] = TweenFrames.Next.NextFrame;
+	time[1] = TweenFrames.Next.Time;
 	
 	float4 c0, c1, c2, c3;
+	float4 n0, n1, n2, n3;
 	
 	matrix transform = 0;
-	matrix curr = 0;
+	matrix curr = 0, next = 0;
+	matrix currAnim = 0, nextAnim = 0;
 	
 	[unroll(4)]
 	for (int i = 0; i < 4; i++)
 	{
-		c0 = TransformsMap.Load(int4(indices[i] * 4 + 0, currFrame, clip, 0)); //_11_12_13_14
-		c1 = TransformsMap.Load(int4(indices[i] * 4 + 1, currFrame, clip, 0)); //_21_22_23_24
-		c2 = TransformsMap.Load(int4(indices[i] * 4 + 2, currFrame, clip, 0)); //_31_32_33_34
-		c3 = TransformsMap.Load(int4(indices[i] * 4 + 3, currFrame, clip, 0)); //_41_42_43_44
+		//-----------------------------------------------------------------
+		//Current Clip
+		//-----------------------------------------------------------------
+		//Current Frame
+		c0 = TransformsMap.Load(int4(indices[i] * 4 + 0, currFrame[0], clip[0], 0)); //_11_12_13_14
+		c1 = TransformsMap.Load(int4(indices[i] * 4 + 1, currFrame[0], clip[0], 0)); //_21_22_23_24
+		c2 = TransformsMap.Load(int4(indices[i] * 4 + 2, currFrame[0], clip[0], 0)); //_31_32_33_34
+		c3 = TransformsMap.Load(int4(indices[i] * 4 + 3, currFrame[0], clip[0], 0)); //_41_42_43_44
 		curr = matrix(c0, c1, c2, c3);
 		
-		transform += mul(weights[i], curr);
+		//Next Frame
+		n0 = TransformsMap.Load(int4(indices[i] * 4 + 0, nextFrame[0], clip[0], 0)); //_11_12_13_14
+		n1 = TransformsMap.Load(int4(indices[i] * 4 + 1, nextFrame[0], clip[0], 0)); //_21_22_23_24
+		n2 = TransformsMap.Load(int4(indices[i] * 4 + 2, nextFrame[0], clip[0], 0)); //_31_32_33_34
+		n3 = TransformsMap.Load(int4(indices[i] * 4 + 3, nextFrame[0], clip[0], 0)); //_41_42_43_44
+		next = matrix(n0, n1, n2, n3);
+		
+		//Inter Frame Lerp
+		currAnim = lerp(curr, next, time[0]);
+		
+		//-----------------------------------------------------------------
+		//Next Clip
+		//-----------------------------------------------------------------
+		[flatten]
+		if(clip[1] > -1)
+		{
+			//Current Frame
+			c0 = TransformsMap.Load(int4(indices[i] * 4 + 0, currFrame[1], clip[1], 0)); //_11_12_13_14
+			c1 = TransformsMap.Load(int4(indices[i] * 4 + 1, currFrame[1], clip[1], 0)); //_21_22_23_24
+			c2 = TransformsMap.Load(int4(indices[i] * 4 + 2, currFrame[1], clip[1], 0)); //_31_32_33_34
+			c3 = TransformsMap.Load(int4(indices[i] * 4 + 3, currFrame[1], clip[1], 0)); //_41_42_43_44
+			curr = matrix(c0, c1, c2, c3);
+		
+			//Next Frame
+			n0 = TransformsMap.Load(int4(indices[i] * 4 + 0, nextFrame[1], clip[1], 0)); //_11_12_13_14
+			n1 = TransformsMap.Load(int4(indices[i] * 4 + 1, nextFrame[1], clip[1], 0)); //_21_22_23_24
+			n2 = TransformsMap.Load(int4(indices[i] * 4 + 2, nextFrame[1], clip[1], 0)); //_31_32_33_34
+			n3 = TransformsMap.Load(int4(indices[i] * 4 + 3, nextFrame[1], clip[1], 0)); //_41_42_43_44
+			next = matrix(n0, n1, n2, n3);
+		
+			//Inter Frame Lerp
+			nextAnim = lerp(curr, next, time[1]);
+				
+			//Inter Clip Lerp
+			currAnim = lerp(currAnim, nextAnim, TweenFrames.TweenTime);
+		}
+		
+		
+		//Add Skinning Weigths
+		transform += mul(weights[i], currAnim);
 	};
 	
 	world = mul(transform, world);
-	//invMesh * animBone * parent(C++) * weights * World(HSLS)
 }
 
 VertexOutput VS(VertexInput input)

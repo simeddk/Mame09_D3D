@@ -7,7 +7,7 @@ SkeletalMeshAnimator::SkeletalMeshAnimator(Shader* shader)
 	skeletalMesh = new SkeletalMesh();
 	transform = new Transform(shader);
 
-	frameBuffer = new ConstantBuffer(&keyframeDesc, sizeof(KeyframeDesc));
+	frameBuffer = new ConstantBuffer(&tweenDesc, sizeof(TweenDesc));
 }
 
 SkeletalMeshAnimator::~SkeletalMeshAnimator()
@@ -25,16 +25,13 @@ SkeletalMeshAnimator::~SkeletalMeshAnimator()
 
 void SkeletalMeshAnimator::Update()
 {
-	//Test
-	SkeletalMeshClip* clip = skeletalMesh->ClipByIndex(keyframeDesc.Clip);
-	ImGui::SliderInt("Current Frame", (int*)&keyframeDesc.CurrFrame, 0, clip->FrameCount() - 1);
-	//--
-
 	if (texture == nullptr)
 	{
 		SetShader(shader, true);
 		CreateTexture();
 	}
+
+	UpdateAnimationFrame();
 
 	for (SkeletalMesh_Mesh* mesh : skeletalMesh->Meshes())
 		mesh->Update();
@@ -54,6 +51,66 @@ void SkeletalMeshAnimator::Render()
 	}
 }
 
+void SkeletalMeshAnimator::UpdateAnimationFrame()
+{
+	TweenDesc& desc = tweenDesc;
+	SkeletalMeshClip* clip = skeletalMesh->ClipByIndex(desc.Curr.Clip);
+
+	//Current Clip
+	desc.Curr.RunningTime += Time::Delta();
+
+	float ratio = 1.f / clip->FrameRate() / desc.Curr.Speed;
+	if (desc.Curr.Time >= 1.f)
+	{
+		desc.Curr.RunningTime = 0.f;
+
+		desc.Curr.CurrFrame = (desc.Curr.CurrFrame + 1) % clip->FrameCount();
+		desc.Curr.NextFrame = (desc.Curr.CurrFrame + 1) % clip->FrameCount();
+	}
+	desc.Curr.Time = desc.Curr.RunningTime / ratio;
+
+	//Next Clip
+	if (desc.Next.Clip > -1)
+	{
+		SkeletalMeshClip* nextClip = skeletalMesh->ClipByIndex(desc.Next.Clip);
+
+		desc.ChangeTime += Time::Delta();
+		desc.TweenTime = desc.ChangeTime / desc.TakeTime;
+
+		if (desc.TweenTime >= 1.f)
+		{
+			desc.Curr = desc.Next;
+
+			desc.Next.Clip = -1;
+			desc.Next.CurrFrame = 0;
+			desc.Next.NextFrame = 0;
+			desc.Next.Time = 0;
+			desc.Next.RunningTime = 0;
+
+			desc.ChangeTime = 0;
+			desc.TweenTime = 0;
+
+			desc.Next.Speed = desc.Curr.Speed;
+		}
+		else
+		{
+			desc.Next.RunningTime += Time::Delta();
+
+			float ratio = 1.f / clip->FrameRate() / desc.Next.Speed;
+			if (desc.Next.Time >= 1.f)
+			{
+				desc.Next.RunningTime = 0.f;
+
+				desc.Next.CurrFrame = (desc.Next.CurrFrame + 1) % clip->FrameCount();
+				desc.Next.NextFrame = (desc.Next.CurrFrame + 1) % clip->FrameCount();
+			}
+			desc.Next.Time = desc.Next.RunningTime / ratio;
+		}
+		
+	}
+	
+}
+
 void SkeletalMeshAnimator::ReadMesh(wstring file)
 {
 	skeletalMesh->ReadMesh(file);
@@ -69,6 +126,13 @@ void SkeletalMeshAnimator::ReadClip(wstring file)
 	skeletalMesh->ReadClip(file);
 }
 
+void SkeletalMeshAnimator::PlayTweenMode(UINT clip, float speed, float taketime)
+{
+	tweenDesc.TakeTime = taketime;
+	tweenDesc.Next.Clip = clip;
+	tweenDesc.Next.Speed = speed;
+}
+
 void SkeletalMeshAnimator::SetShader(Shader* shader, bool bCalledByUpdate)
 {
 	this->shader = shader;
@@ -80,7 +144,7 @@ void SkeletalMeshAnimator::SetShader(Shader* shader, bool bCalledByUpdate)
 	}
 
 	sTransformsSRV = shader->AsSRV("TransformsMap");
-	sFrameBuffer = shader->AsConstantBuffer("CB_Keyframes");
+	sFrameBuffer = shader->AsConstantBuffer("CB_Animationframe");
 
 	for (SkeletalMesh_Mesh* mesh : skeletalMesh->Meshes())
 		mesh->SetShader(shader);
