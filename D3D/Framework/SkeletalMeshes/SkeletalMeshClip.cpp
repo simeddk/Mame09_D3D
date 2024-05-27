@@ -3,7 +3,7 @@
 
 SkeletalMeshKeyframe* SkeletalMeshClip::Keyframe(wstring boneName)
 {
-	if (keyframeMap.count(name) < 1)
+	if (keyframeMap.count(boneName) < 1)
 		return nullptr;
 
 	return keyframeMap[boneName];

@@ -25,6 +25,11 @@ SkeletalMeshAnimator::~SkeletalMeshAnimator()
 
 void SkeletalMeshAnimator::Update()
 {
+	//Test
+	SkeletalMeshClip* clip = skeletalMesh->ClipByIndex(keyframeDesc.Clip);
+	ImGui::SliderInt("Current Frame", (int*)&keyframeDesc.CurrFrame, 0, clip->FrameCount() - 1);
+	//--
+
 	if (texture == nullptr)
 	{
 		SetShader(shader, true);
