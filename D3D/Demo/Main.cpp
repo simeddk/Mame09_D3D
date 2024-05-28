@@ -18,11 +18,11 @@
 #include "GetHeightDemo.h"
 #include "StaticMeshDemo.h"
 #include "CubeMapDemo.h"
+#include "ThreadDemo.h"
 
 void Main::Initialize()
 {
-	Push(new CubeMapDemo());
-	Push(new GetHeightDemo());
+	Push(new ThreadDemo());
 }
 
 

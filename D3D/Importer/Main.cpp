@@ -9,8 +9,8 @@
 void Main::Initialize()
 {
 	Push(new ExportFile());
-	//Push(new SkeletalMeshDemo());
-	Push(new AnimationDemo());
+	Push(new SkeletalMeshDemo());
+	//Push(new AnimationDemo());
 }
 
 

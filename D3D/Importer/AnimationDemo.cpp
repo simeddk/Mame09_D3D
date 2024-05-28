@@ -20,20 +20,36 @@ void AnimationDemo::Destroy()
 void AnimationDemo::Update()
 {
 	//Tweening Test
+	static bool bBlendMode = false;
+	static float blendAlpha = 0.f;
+
 	static int clip = 0;
 	static float speed = 1.f;
 	static float takeTime = 0.25f;
 
-	ImGui::InputInt("Clip", &clip);
-	clip = Math::Clamp(clip, 0, 4);
+	ImGui::Checkbox("Blend Mode", &bBlendMode);
 
-	const char* clipsName[] = { "Idle", "Walk", "Run", "Slash", "Dance" };
-	ImGui::Text("%s", clipsName[clip]);
-	ImGui::SliderFloat("Speed", &speed, 0.1f, 5.f);
-	ImGui::SliderFloat("TakeTime", &takeTime, 0.1f, 5.f);
+	if (bBlendMode == false)
+	{
+		ImGui::InputInt("Clip", &clip);
+		clip = Math::Clamp(clip, 0, 4);
 
-	if (ImGui::Button("Apply"))
-		kachujin->PlayTweenMode(clip, speed, takeTime);
+		const char* clipsName[] = { "Idle", "Walk", "Run", "Slash", "Dance" };
+		ImGui::Text("%s", clipsName[clip]);
+		ImGui::SliderFloat("Speed", &speed, 0.1f, 5.f);
+		ImGui::SliderFloat("TakeTime", &takeTime, 0.1f, 5.f);
+
+		if (ImGui::Button("Apply"))
+			kachujin->PlayTweenMode(clip, speed, takeTime);
+	}
+	else
+	{
+		ImGui::SliderFloat("Blend Alpha", &blendAlpha, 0.f, 2.f);
+		kachujin->SetBlendAlpha(blendAlpha);
+
+		if (ImGui::Button("Apply"))
+			kachujin->PlayBlendMode(0, 1, 2);
+	}
 	
 
 	//Light Direction Test

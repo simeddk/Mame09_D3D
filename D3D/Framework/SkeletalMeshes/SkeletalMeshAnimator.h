@@ -11,6 +11,7 @@ public:
 
 private:
 	void UpdateAnimationFrame();
+	void UpdateBlendingFrame();
 
 public:
 	void ReadMesh(wstring file);
@@ -18,6 +19,8 @@ public:
 	void ReadClip(wstring file);
 
 	void PlayTweenMode(UINT clip, float speed = 1.f, float taketime = 0.25f);
+	void PlayBlendMode(UINT clip1, UINT clip2, UINT clip3);
+	void SetBlendAlpha(float alpha);
 
 public:
 	void SetShader(Shader* shader, bool bCalledByUpdate = false);
@@ -96,6 +99,19 @@ private:
 
 	ConstantBuffer* frameBuffer;
 	ID3DX11EffectConstantBuffer* sFrameBuffer;
+
+private:
+	struct BlendDesc
+	{
+		UINT Mode = 0;
+		float Alpha = 0;
+		Vector2 Padding;
+
+		KeyframeDesc Clips[3];
+	} blendDesc;
+
+	ConstantBuffer* blendBuffer;
+	ID3DX11EffectConstantBuffer* sBlendBuffer;
 
 private:
 	Shader* shader;
