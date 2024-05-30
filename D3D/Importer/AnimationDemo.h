@@ -23,4 +23,8 @@ private:
 
 	class ColliderObject* colliderObject;
 	Matrix bones[MAX_BONE_COUNT];
+
+	Shader* weaponShader;
+	SkeletalMeshRenderer* weapon = nullptr;
+	Transform* weaponInitTransform = nullptr;
 };

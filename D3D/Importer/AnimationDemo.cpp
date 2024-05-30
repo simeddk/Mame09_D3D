@@ -7,6 +7,7 @@ void AnimationDemo::Initialize()
 	Context::Get()->GetCamera()->RotationDegree(12, 0, 0);
 	Context::Get()->GetCamera()->Position(2, 4, -12);
 	shader = new Shader(L"17_Animation.fxo");
+	weaponShader = new Shader(L"16_SkeletalMesh.fxo");
 
 	Kachujin();
 }
@@ -17,6 +18,9 @@ void AnimationDemo::Destroy()
 
 	SafeDelete(kachujin);
 	SafeDelete(colliderObject);
+
+	SafeDelete(weapon);
+	SafeDelete(weaponShader);
 }
 
 void AnimationDemo::Update()
@@ -58,6 +62,7 @@ void AnimationDemo::Update()
 	static Vector3 lightDirection = Vector3(-1, -1, 1);
 	ImGui::SliderFloat3("Light Direction", lightDirection, -1, 1);
 	shader->AsVector("LightDirection")->SetFloatVector(lightDirection);
+	weaponShader->AsVector("LightDirection")->SetFloatVector(lightDirection);
 
 	//Pass Test
 	static int pass = 0;
@@ -73,6 +78,10 @@ void AnimationDemo::Update()
 		kachujin->GetAttachBones(bones);
 		colliderObject->World->World(bones[40]);
 		colliderObject->Collision->Update();
+
+		Transform* weaponTransform = weapon->GetTransform();
+		weaponTransform->World(weaponInitTransform->World() * bones[40]);
+		weapon->Update();
 	}
 }
 
@@ -86,6 +95,8 @@ void AnimationDemo::Render()
 		//Vector3 Init = Vector3(-2.9f, 1.45f, -50.0f);
 		//ImGui::SliderFloat3("Init", (float*)&Init, -10, 10);
 		//colliderObject->Init->Position(Init);
+
+		weapon->Render();
 	}
 }
 
@@ -108,4 +119,13 @@ void AnimationDemo::Kachujin()
 	colliderObject->Init->Scale(5, 5, 75);
 	colliderObject->Init->Rotation(0, 0, 1);
 	ZeroMemory(&bones, sizeof(Matrix) * MAX_BONE_COUNT);
+
+	weapon = new SkeletalMeshRenderer(weaponShader);
+	weapon->ReadMesh(L"Weapon/Sword");
+	weapon->ReadMaterial(L"Weapon/Sword");
+
+	weaponInitTransform = new Transform();
+	weaponInitTransform->Position(-2.9f, 1.45f, -6.45f);
+	weaponInitTransform->Scale(0.5f, 0.5f, 0.75f);
+	weaponInitTransform->Rotation(0, 0, 1);
 }
