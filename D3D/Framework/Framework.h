@@ -102,3 +102,5 @@ typedef D3DXPLANE Plane;
 
 #include "Environment/Terrain.h"
 #include "Environment/Sky.h"
+
+#include "Viewer/Canvas.h"

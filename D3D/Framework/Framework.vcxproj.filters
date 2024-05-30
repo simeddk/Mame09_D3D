@@ -122,6 +122,9 @@
     <ClCompile Include="SkeletalMeshes\SkeletalMeshAnimator.cpp">
       <Filter>SkeletalMeshes</Filter>
     </ClCompile>
+    <ClCompile Include="Viewer\Canvas.cpp">
+      <Filter>Viewer</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Renders">
@@ -270,6 +273,9 @@
     </ClInclude>
     <ClInclude Include="SkeletalMeshes\SkeletalMeshAnimator.h">
       <Filter>SkeletalMeshes</Filter>
+    </ClInclude>
+    <ClInclude Include="Viewer\Canvas.h">
+      <Filter>Viewer</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
