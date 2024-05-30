@@ -193,9 +193,9 @@ void CS(uint3 id : SV_GroupThreadID)
 	matrix world = World;
 	
 	if (BlendingFrames.Mode == 0)
-		SetAnimationWorld(World, id);
+		SetAnimationWorld(world, id);
 	else
-		SetBlendingWorld(World, id);
+		SetBlendingWorld(world, id);
 	
 	world = mul(InputBones[id.x].Transform, world);
     

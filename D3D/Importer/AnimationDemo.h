@@ -20,4 +20,7 @@ private:
 	Shader* shader;
 
 	SkeletalMeshAnimator* kachujin = nullptr;
+
+	class ColliderObject* colliderObject;
+	Matrix bones[MAX_BONE_COUNT];
 };
