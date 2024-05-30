@@ -54,6 +54,9 @@
     <ClCompile Include="ThreadDemo.cpp">
       <Filter>Thread</Filter>
     </ClCompile>
+    <ClCompile Include="RawBufferDemo.cpp">
+      <Filter>Thread</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Main.h" />
@@ -107,6 +110,9 @@
       <Filter>StaticMeshes</Filter>
     </ClInclude>
     <ClInclude Include="ThreadDemo.h">
+      <Filter>Thread</Filter>
+    </ClInclude>
+    <ClInclude Include="RawBufferDemo.h">
       <Filter>Thread</Filter>
     </ClInclude>
   </ItemGroup>

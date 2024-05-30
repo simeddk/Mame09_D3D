@@ -157,6 +157,7 @@
     <ClCompile Include="MultiWorldDemo.cpp" />
     <ClCompile Include="PlaneDemo.cpp" />
     <ClCompile Include="PolygonDemo.cpp" />
+    <ClCompile Include="RawBufferDemo.cpp" />
     <ClCompile Include="SamplerStateDemo.cpp" />
     <ClCompile Include="StaticMeshDemo.cpp" />
     <ClCompile Include="stdafx.cpp" />
@@ -178,6 +179,7 @@
     <ClInclude Include="MultiWorldDemo.h" />
     <ClInclude Include="PlaneDemo.h" />
     <ClInclude Include="PolygonDemo.h" />
+    <ClInclude Include="RawBufferDemo.h" />
     <ClInclude Include="SamplerStateDemo.h" />
     <ClInclude Include="StaticMeshDemo.h" />
     <ClInclude Include="stdafx.h" />

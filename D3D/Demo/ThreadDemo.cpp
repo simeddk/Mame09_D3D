@@ -8,7 +8,27 @@ void ThreadDemo::Initialize()
 	//Loop();
 	//MultiThread();
 	//SharedResource();
-	LoopQuater();
+	//LoopQuater();
+	//SetTimer();
+
+	int a[10000];
+	for (int i = 0; i < 10000; i++)
+		a[i] = Math::Random(0, 9999);
+
+	Performance p;
+	p.Start();
+	{
+		sort(a, a + 10000);
+	}
+	printf("RunningTime : %f\n", p.End());
+
+	for (int i = 0; i < 10000; i++)
+	{
+		if (i % 5 == 0)
+			printf("\n");
+
+		printf("%4d\t", a[i]);
+	}
 }
 
 void ThreadDemo::Update()
@@ -77,8 +97,13 @@ void ThreadDemo::SharedResource()
 
 void ThreadDemo::RaceCondition(int& count)
 {
-	for (int i = 0; i < 1000000; i++)
-		count++;
+	lock_guard<mutex> lock(m);
+	//m.lock();
+	{
+		for (int i = 0; i < 1000000; i++)
+			count++;
+	}
+	//m.unlock();
 }
 
 void ThreadDemo::LoopQuater()
@@ -97,4 +122,10 @@ void ThreadDemo::LoopQuater()
 		threads[i].join();
 
 	printf("count : %d\n", count);
+}
+
+void ThreadDemo::SetTimer()
+{
+	timer[0].Start([]() { printf("난 2초마다 2번 실행되지\n"); }, 2000, 2);
+	timer[1].Start([]() { printf("난 1초마다 계속 실행되지\n"); }, 1000);
 }
