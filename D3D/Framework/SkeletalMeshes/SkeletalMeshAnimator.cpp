@@ -9,6 +9,21 @@ SkeletalMeshAnimator::SkeletalMeshAnimator(Shader* shader)
 
 	frameBuffer = new ConstantBuffer(&tweenDesc, sizeof(TweenDesc));
 	blendBuffer = new ConstantBuffer(&blendDesc, sizeof(BlendDesc));
+
+	//Create ComputeShader
+	{
+		computeShader = new Shader(L"21_GetBones.fxo");
+
+		sComputeWorld = computeShader->AsMatrix("World");
+
+		sComputeFrameBuffer = computeShader->AsConstantBuffer("CB_Animationframe");
+		sComputeBlendBuffer = computeShader->AsConstantBuffer("CB_Blendingframe");
+		sComputeTransformsSRV = computeShader->AsSRV("TransformsMap");
+
+		computeBoneBuffer = new StructuredBuffer(nullptr, sizeof(Matrix), MAX_BONE_COUNT, sizeof(Matrix), MAX_BONE_COUNT);
+		sComputeInputBoneBuffer = computeShader->AsSRV("InputBones");
+		sComputeOutputBoneBuffer = computeShader->AsUAV("OutputBones");
+	}
 }
 
 SkeletalMeshAnimator::~SkeletalMeshAnimator()
@@ -23,6 +38,9 @@ SkeletalMeshAnimator::~SkeletalMeshAnimator()
 
 	SafeDelete(frameBuffer);
 	SafeDelete(blendBuffer);
+
+	SafeDelete(computeShader);
+	SafeDelete(computeBoneBuffer);
 }
 
 void SkeletalMeshAnimator::Update()
@@ -31,6 +49,12 @@ void SkeletalMeshAnimator::Update()
 	{
 		SetShader(shader, true);
 		CreateTexture();
+
+		Matrix bones[MAX_BONE_COUNT];
+		for (UINT i = 0; i < skeletalMesh->BoneCount(); i++)
+			bones[i] = skeletalMesh->BoneByIndex(i)->Transform();
+
+		computeBoneBuffer->CopyToInput(bones);
 	}
 
 	if (blendDesc.Mode == 0)
@@ -38,16 +62,34 @@ void SkeletalMeshAnimator::Update()
 	else
 		UpdateBlendingFrame();
 
+
+	frameBuffer->Map();
+	blendBuffer->Map();
+
+	frameTime += Time::Delta();
+	if (frameTime > (1.0f / frameRate))
+	{
+		sComputeWorld->SetMatrix(transform->World());
+
+		sComputeFrameBuffer->SetConstantBuffer(frameBuffer->Buffer());
+		sComputeBlendBuffer->SetConstantBuffer(blendBuffer->Buffer());
+		sComputeTransformsSRV->SetResource(transformsSRV);
+
+		sComputeInputBoneBuffer->SetResource(computeBoneBuffer->SRV());
+		sComputeOutputBoneBuffer->SetUnorderedAccessView(computeBoneBuffer->UAV());
+
+		computeShader->Dispatch(0, 0, 1, 1, 1);
+	}
+	frameTime = fmod(frameTime, (1.0f / frameRate));
+
+
 	for (SkeletalMesh_Mesh* mesh : skeletalMesh->Meshes())
 		mesh->Update();
 }
 
 void SkeletalMeshAnimator::Render()
 {
-	frameBuffer->Map();
 	sFrameBuffer->SetConstantBuffer(frameBuffer->Buffer());
-
-	blendBuffer->Map();
 	sBlendBuffer->SetConstantBuffer(blendBuffer->Buffer());
 	
 	sTransformsSRV->SetResource(transformsSRV);
@@ -203,6 +245,11 @@ void SkeletalMeshAnimator::Pass(UINT pass)
 {
 	for (SkeletalMesh_Mesh* mesh : skeletalMesh->Meshes())
 		mesh->Pass(pass);
+}
+
+void SkeletalMeshAnimator::GetAttachBones(Matrix* matrix)
+{
+	computeBoneBuffer->CopyFromOutput(matrix);
 }
 
 void SkeletalMeshAnimator::CreateTexture()

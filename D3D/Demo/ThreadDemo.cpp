@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "ThreadDemo.h"
 
-#pragma comment(linker, "/entry:WinMainCRTStartup /subsystem:console")
+//#pragma comment(linker, "/entry:WinMainCRTStartup /subsystem:console")
 
 void ThreadDemo::Initialize()
 {

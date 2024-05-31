@@ -125,6 +125,9 @@
     <ClCompile Include="Viewer\Canvas.cpp">
       <Filter>Viewer</Filter>
     </ClCompile>
+    <ClCompile Include="Renders\Collider.cpp">
+      <Filter>Renders</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Renders">
@@ -276,6 +279,9 @@
     </ClInclude>
     <ClInclude Include="Viewer\Canvas.h">
       <Filter>Viewer</Filter>
+    </ClInclude>
+    <ClInclude Include="Renders\Collider.h">
+      <Filter>Renders</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
