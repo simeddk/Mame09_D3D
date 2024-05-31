@@ -12,7 +12,9 @@ SkeletalMeshAnimator::SkeletalMeshAnimator(Shader* shader)
 
 	//Create ComputeShader
 	{
+
 		computeShader = new Shader(L"21_GetBones.fxo");
+
 
 		sComputeWorld = computeShader->AsMatrix("World");
 
@@ -63,6 +65,7 @@ void SkeletalMeshAnimator::Update()
 		UpdateBlendingFrame();
 
 
+
 	frameBuffer->Map();
 	blendBuffer->Map();
 
@@ -80,7 +83,9 @@ void SkeletalMeshAnimator::Update()
 
 		computeShader->Dispatch(0, 0, 1, 1, 1);
 	}
+
 	frameTime = fmod(frameTime, (1.0f / frameRate));
+
 
 
 	for (SkeletalMesh_Mesh* mesh : skeletalMesh->Meshes())

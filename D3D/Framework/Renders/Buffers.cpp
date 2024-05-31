@@ -251,6 +251,7 @@ void RawBuffer::CopyFromOutput(void* data)
 	}
 	D3D::GetDC()->Unmap(output, 0);
 }
+
 //-----------------------------------------------------------------------------
 //TextureBuffer
 //-----------------------------------------------------------------------------
@@ -285,7 +286,7 @@ TextureBuffer::TextureBuffer(ID3D11Texture2D* src)
 	((ID3D11Texture2D*)output)->GetDesc(&desc);
 	desc.Usage = D3D11_USAGE_STAGING;
 	desc.CPUAccessFlags = D3D11_CPU_ACCESS_READ;
-	desc.BindFlags = 0; //SRV, RTV µÑ ´Ù »ç¿ë X
+	desc.BindFlags = 0; //SRV, RTV ë‘˜ ë‹¤ ì‚¬ìš© X
 	desc.MiscFlags = 0;
 
 	Check(D3D::GetDevice()->CreateTexture2D(&desc, nullptr, &result));
@@ -331,7 +332,7 @@ void TextureBuffer::CreateOutput()
 
 	output = (ID3D11Resource*)texture;
 
-	//output ÅØ½ºÃÄ¸¦ ´Ù½Ã ·»´õ¸µ ÆÄÀÌÇÁ¶óÀÎÀ¸·Î º¸³»±â À§ÇÔ
+	//output í…ìŠ¤ì³ë¥¼ ë‹¤ì‹œ ë Œë”ë§ íŒŒì´í”„ë¼ì¸ìœ¼ë¡œ ë³´ë‚´ê¸° ìœ„í•¨
 	D3D11_SHADER_RESOURCE_VIEW_DESC srvDesc;
 	ZeroMemory(&srvDesc, sizeof(D3D11_SHADER_RESOURCE_VIEW_DESC));
 	srvDesc.Format = desc.Format;
@@ -349,7 +350,7 @@ void TextureBuffer::CreateUAV()
 
 	D3D11_UNORDERED_ACCESS_VIEW_DESC uavDesc;
 	ZeroMemory(&uavDesc, sizeof(D3D11_UNORDERED_ACCESS_VIEW_DESC));
-	uavDesc.Format = DXGI_FORMAT_UNKNOWN; //Æ÷¸ËÀº ÅØ½ºÃÄ¸¶´Ù ´Ù¸£´Ù
+	uavDesc.Format = DXGI_FORMAT_UNKNOWN; //í¬ë§·ì€ í…ìŠ¤ì³ë§ˆë‹¤ ë‹¤ë¥´ë‹¤
 	uavDesc.ViewDimension = D3D11_UAV_DIMENSION_TEXTURE2DARRAY;
 	uavDesc.Texture2DArray.ArraySize = arraySize;
 
@@ -358,7 +359,7 @@ void TextureBuffer::CreateUAV()
 
 void TextureBuffer::CopyToInput(ID3D11Texture2D* texture)
 {
-	//ÅØ½ºÃÄ º¹»ç´Â DX ÇÔ¼ö »ç¿ë
+	//í…ìŠ¤ì³ ë³µì‚¬ëŠ” DX í•¨ìˆ˜ ì‚¬ìš©
 	D3D::GetDC()->CopyResource(input, texture);
 }
 
@@ -481,3 +482,4 @@ void StructuredBuffer::CopyFromOutput(void* data)
 	}
 	D3D::GetDC()->Unmap(output, 0);
 }
+

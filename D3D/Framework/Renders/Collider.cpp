@@ -23,18 +23,19 @@ ColliderObject::~ColliderObject()
 //Collider
 //-----------------------------------------------------------------------------
 Collider::Collider(Transform* transform, Transform* init)
+
 	: transform(transform)
 	, init(init)
 {
-	lines[0] = Vector3(-0.5f, -0.5f, -0.5f); //ÁÂÇÏ(±Ù)
-	lines[1] = Vector3(-0.5f, +0.5f, -0.5f); //ÁÂ»ó(±Ù)
-	lines[2] = Vector3(+0.5f, -0.5f, -0.5f); //¿ìÇÏ(±Ù)
-	lines[3] = Vector3(+0.5f, +0.5f, -0.5f); //¿ì»ó(±Ù)
+	lines[0] = Vector3(-0.5f, -0.5f, -0.5f); //ì¢Œí•˜(ê·¼)
+	lines[1] = Vector3(-0.5f, +0.5f, -0.5f); //ì¢Œìƒ(ê·¼)
+	lines[2] = Vector3(+0.5f, -0.5f, -0.5f); //ìš°í•˜(ê·¼)
+	lines[3] = Vector3(+0.5f, +0.5f, -0.5f); //ìš°ìƒ(ê·¼)
 
-	lines[4] = Vector3(-0.5f, -0.5f, +0.5f); //ÁÂÇÏ(¿ø)
-	lines[5] = Vector3(-0.5f, +0.5f, +0.5f); //ÁÂ»ó(¿ø)
-	lines[6] = Vector3(+0.5f, -0.5f, +0.5f); //¿ìÇÏ(¿ø)
-	lines[7] = Vector3(+0.5f, +0.5f, +0.5f); //¿ì»ó(¿ø)
+	lines[4] = Vector3(-0.5f, -0.5f, +0.5f); //ì¢Œí•˜(ì›)
+	lines[5] = Vector3(-0.5f, +0.5f, +0.5f); //ì¢Œìƒ(ì›)
+	lines[6] = Vector3(+0.5f, -0.5f, +0.5f); //ìš°í•˜(ì›)
+	lines[7] = Vector3(+0.5f, +0.5f, +0.5f); //ìš°ìƒ(ì›)
 }
 
 Collider::~Collider()
@@ -49,7 +50,9 @@ void Collider::Update()
 
 void Collider::Render(Color color)
 {
+
 	Vector3 dest[8]; //Final Result
+
 
 	Transform temp;
 	temp.World(transform->World());

@@ -8,7 +8,9 @@ void ExportFile::Initialize()
 	//Kachujin();
 	//Tower();
 	//Airplane();
+
 	//Wepons();
+
 }
 
 void ExportFile::Tank()
@@ -73,6 +75,7 @@ void ExportFile::Airplane()
 	conv->ExportMatrial(L"B787/Airplane");
 	SafeDelete(conv);
 }
+
 
 void ExportFile::Wepons()
 {

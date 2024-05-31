@@ -11,6 +11,7 @@
 
 */Debug_*/*
 _Assets/*
+*.mesh
 
 # User-specific files
 *.rsuser

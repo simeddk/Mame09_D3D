@@ -51,4 +51,5 @@ void Canvas::Render()
 void Canvas::SRV(ID3D11ShaderResourceView* srv)
 {
 	sDiffuseMap->SetResource(srv);
+
 }

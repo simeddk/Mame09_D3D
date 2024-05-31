@@ -20,7 +20,9 @@ public:
 class Collider
 {
 public:
+
 	Collider(Transform* transform, Transform* init = nullptr);
+
 	~Collider();
 
 	void Update();
