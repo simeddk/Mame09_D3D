@@ -8,7 +8,9 @@ void ExportFile::Initialize()
 	//Kachujin();
 	//Tower();
 	//Airplane();
-	//Weapons();
+
+	//Wepons();
+
 }
 
 void ExportFile::Tank()
@@ -74,7 +76,8 @@ void ExportFile::Airplane()
 	SafeDelete(conv);
 }
 
-void ExportFile::Weapons()
+
+void ExportFile::Wepons()
 {
 	vector<wstring> names;
 	names.push_back(L"Cutter.fbx");

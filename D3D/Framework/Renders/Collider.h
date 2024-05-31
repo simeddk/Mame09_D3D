@@ -20,15 +20,17 @@ public:
 class Collider
 {
 public:
-	Collider(Transform* transform, Transform* init = NULL);
+
+	Collider(Transform* transform, Transform* init = nullptr);
+
 	~Collider();
 
 	void Update();
 	void Render(Color color = Color(0, 1, 0, 1));
 
 private:
-	Transform* init = NULL;
+	Transform* init = nullptr;
 	Transform* transform;
 
-	Vector3 lines[8];
+	Vector3 lines[8]; //NDC
 };

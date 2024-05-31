@@ -79,6 +79,12 @@ void AnimationDemo::Update()
 		colliderObject->World->World(bones[40]);
 		colliderObject->Collision->Update();
 
+
+		Vector3 Init = Vector3(-2.9f, 1.45f, -50.0f);
+		ImGui::SliderFloat3("Init", (float*)&Init, -10, 10);
+		colliderObject->Init->Position(Init);
+
+
 		Transform* weaponTransform = weapon->GetTransform();
 		weaponTransform->World(weaponInitTransform->World() * bones[40]);
 		weapon->Update();
@@ -92,9 +98,11 @@ void AnimationDemo::Render()
 		kachujin->Render();
 		colliderObject->Collision->Render();
 
+
 		//Vector3 Init = Vector3(-2.9f, 1.45f, -50.0f);
 		//ImGui::SliderFloat3("Init", (float*)&Init, -10, 10);
 		//colliderObject->Init->Position(Init);
+
 
 		weapon->Render();
 	}

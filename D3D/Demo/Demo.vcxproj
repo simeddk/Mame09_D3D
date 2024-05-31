@@ -162,6 +162,7 @@
     <ClCompile Include="StaticMeshDemo.cpp" />
     <ClCompile Include="stdafx.cpp" />
     <ClCompile Include="TerrainDemo.cpp" />
+    <ClCompile Include="TextureBufferDemo.cpp" />
     <ClCompile Include="TextureDemo.cpp" />
     <ClCompile Include="ThreadDemo.cpp" />
     <ClCompile Include="WorldDemo.cpp" />
@@ -184,6 +185,7 @@
     <ClInclude Include="StaticMeshDemo.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="TerrainDemo.h" />
+    <ClInclude Include="TextureBufferDemo.h" />
     <ClInclude Include="TextureDemo.h" />
     <ClInclude Include="ThreadDemo.h" />
     <ClInclude Include="WorldDemo.h" />
