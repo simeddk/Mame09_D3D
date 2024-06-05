@@ -99,9 +99,9 @@ void AnimationDemo::Render()
 		colliderObject->Collision->Render();
 
 
-		//Vector3 Init = Vector3(-2.9f, 1.45f, -50.0f);
-		//ImGui::SliderFloat3("Init", (float*)&Init, -10, 10);
-		//colliderObject->Init->Position(Init);
+		Vector3 Init = Vector3(-2.9f, 1.45f, -50.0f);
+		ImGui::SliderFloat3("Init", (float*)&Init, -10, 10);
+		colliderObject->Init->Position(Init);
 
 
 		weapon->Render();
